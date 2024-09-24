@@ -1,7 +1,7 @@
 """ Test of the sign up view """
 from django.test import TestCase
 from django.urls import reverse
-from secretsanta.forms import SignUpForm
+from secretsanta.forms.sign_up_form import SignUpForm
 from django.test import TestCase
 from secretsanta.models import User
 from django.contrib.auth.hashers import check_password
