@@ -1,8 +1,6 @@
-from django.shortcuts import render
 from django.http import HttpResponse
 from secretsanta.forms.sign_up_form import SignUpForm
-from secretsanta.forms.log_in_form import LogInForm
-
+from secretsanta.forms.log_in_form import LogInForm 
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import redirect, render
 
@@ -22,14 +20,15 @@ def sign_up(request):
     return render(request, 'sign_up.html', {'form': form})
 
 def log_in(request):
-    if request.method == "POST" #checks method request
-    form = LogInForm(request.POST)
-    if form.is_valid():
-        username = form.cleaned_data.get('username')
-        password = form.cleaned_data.get('password')
-        user = authenticate(username=username, password=password)
-        if user is not None:
-            login(request, user)
+
+    if request.method == "POST": # checks method request
+        form = LogInForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                login(request, user)
     form = LogInForm()
     return render(request, 'log_in.html', {'form' : form})
 
