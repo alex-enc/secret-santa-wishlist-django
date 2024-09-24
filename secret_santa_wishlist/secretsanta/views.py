@@ -42,3 +42,7 @@ def log_in(request):
 
 def dashboard(request):
     return render(request, 'dashboard.html') 
+
+def log_out(request):
+    logout(request)
+    return redirect('home')
