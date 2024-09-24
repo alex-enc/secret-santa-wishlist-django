@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from .forms import SignUpForm
+from secretsanta.forms.sign_up_form import SignUpForm
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import redirect, render
 
