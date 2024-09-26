@@ -1,12 +1,18 @@
 {% extends 'base.html' %}
 {% block body %}
-<h1>Log In</h1>
-{% for message in messages %}
-    <p><b> {{ message }} </b></p>
-{% endfor %}
-<form action="{% url 'log_in' %}" method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Log In">
-</form>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12 col-md-6 offset-md-3">
+            <h1>Log In</h1>
+            {% for message in messages %}
+                <p><b> {{ message }} </b></p>
+            {% endfor %}
+            <form action="{% url 'log_in' %}" method="post">
+                {% csrf_token %}
+                {% include 'partials/bootstrap_form.html' with form=form %}
+                <input type="submit" value="Log In" class="btn btn-primary">
+            </form>
+        </div>
+    </div>
+</div>
 {% endblock %}
