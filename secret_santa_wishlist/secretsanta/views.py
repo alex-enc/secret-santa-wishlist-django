@@ -12,7 +12,9 @@ def home(request):
 def sign_up(request):
     if request.method == 'POST':
         form = SignUpForm(request.POST)
+        print(form.is_bound)
         if form.is_valid():
+            print("Form is valid")
             user = form.save()
             login(request, user)
             return redirect('dashboard')
