@@ -6,9 +6,7 @@
             <div class="card" style="width: 40rem;">
                 <div class="card-body text-center">
                     <h5 class="card-title">Log In</h5>
-                    {% for message in messages %}
-                        <p><b> {{ message }} </b></p>
-                    {% endfor %}
+                    {% include 'partials/messages.html' with messages=messages %}
                     <form action="{% url 'log_in' %}" method="post">
                         {% csrf_token %}
                         {% include 'partials/bootstrap_form.html' with form=form %}
