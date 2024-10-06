@@ -1,6 +1,7 @@
 from django.http import HttpResponse
 from secretsanta.forms.sign_up_form import SignUpForm
 from secretsanta.forms.log_in_form import LogInForm 
+from secretsanta.forms.create_group_form import CreateGroupForm 
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import redirect, render
 from django.contrib import messages
@@ -44,6 +45,21 @@ def log_in(request):
 
 def dashboard(request):
     return render(request, 'dashboard.html') 
+
+def create_group(request):
+    if request.method == 'POST':
+        form = CreateGroupForm(request.POST)
+        if form.is_valid():
+            form.save(admin=request.user)  # Set the logged-in user as the admin
+            messages.success(request, 'Group created successfully!')
+            return redirect('dashboard')  # Redirect to the dashboard or any other page
+        else:
+            messages.error(request, 'There was an error creating the group.')
+    else:
+        form = CreateGroupForm()
+
+    return render(request, 'create_group.html', {'form': form})
+
 
 def log_out(request):
     logout(request)

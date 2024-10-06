@@ -1,6 +1,13 @@
-{% extends 'base.html' %}
+{% extends 'logged_in_base.html' %}
 {% block body %}
 <h1>Dashboard</h1>
-<p><a href='{% url 'log_out' %}'>Log Out</a></p>
+<div class="card m-5">
+    <div class="card-header">
+        <h3>Create Your Secret Santa Gift Exchange Group</h3>
+    </div>
+    <div class="card-body">
+        <a href="{% url 'create_group' %}" class="btn btn-secondary">Create Group</a>
+    </div>
+</div>
 {% endblock %}
 
