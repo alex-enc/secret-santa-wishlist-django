@@ -46,7 +46,7 @@ def log_in(request):
 def dashboard(request):
     return render(request, 'dashboard.html') 
 
-def create_group(request):
+def new_group_info(request):
     if request.method == 'POST':
         form = CreateGroupForm(request.POST)
         if form.is_valid():
@@ -58,7 +58,7 @@ def create_group(request):
     else:
         form = CreateGroupForm()
 
-    return render(request, 'create_group.html', {'form': form})
+    return render(request, 'new_group_info.html', {'form': form})
 
 
 def log_out(request):

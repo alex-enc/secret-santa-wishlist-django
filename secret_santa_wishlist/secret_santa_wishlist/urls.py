@@ -24,5 +24,5 @@ urlpatterns = [
     path('log_in/', views.log_in, name='log_in'),
     path('log_out', views.log_out, name='log_out'),
     path('dashboard/', views.dashboard, name='dashboard'),
-    path('create_group/', views.create_group, name='create_group'),
+    path('new_group_info/', views.new_group_info, name='new_group_info'),
 ]
