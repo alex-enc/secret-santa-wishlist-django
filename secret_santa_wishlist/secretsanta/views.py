@@ -60,6 +60,19 @@ def new_group_info(request):
 
     return render(request, 'new_group_info.html', {'form': form})
 
+def create_group(request):
+    if request.method == 'POST':
+        form = CreateGroupForm(request.POST)
+        if form.is_valid():
+            form.save(admin=request.user)  # Set the logged-in user as the admin
+            messages.success(request, 'Group created successfully!')
+            return redirect('dashboard')  # Redirect to the dashboard or any other page
+        else:
+            messages.error(request, 'There was an error creating the group.')
+    else:
+        form = CreateGroupForm()
+
+    return render(request, 'create_group.html', {'form': form})
 
 def log_out(request):
     logout(request)

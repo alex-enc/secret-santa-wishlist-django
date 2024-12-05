@@ -1,0 +1,7 @@
+{% extends 'logged_in_base.html' %}
+{% block body %}
+<div class="input-group mb-3">
+    <input type="text" class="form-control" placeholder="Enter Group's Name" aria-label="Group Name" aria-describedby="button-addon2">
+    <a href="{% url 'new_group_info' %}" class="btn btn-outline-secondary" type="button" id="button-addon2">Create Group</a>
+</div>
+{% endblock %}
