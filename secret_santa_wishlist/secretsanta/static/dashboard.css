@@ -1,0 +1,31 @@
+.dashboard {
+    height: 100vh; /* Full height of the viewport */
+    overflow: hidden; /* Prevent body scrolling */
+}
+.left-column {
+    overflow-y: auto; /* Enable vertical scrolling */
+    height: 100%; /* Ensure it spans the full viewport height */
+    padding: 20px;
+    background-color: #f8f8f8;
+    border-right: 1px solid #ddd;
+}
+.right-column {
+    position: sticky; /* Fix the position */
+    top: 0; /* Stick to the top of the viewport */
+    height: 100%; /* Ensure it spans the full viewport height */
+    padding: 20px;
+    background-color: #fff;
+}
+.widget {
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Card spacing inside the left column */
+.left-column .row .widget {
+    margin-bottom: 20px; /* Add spacing between rows of cards */
+}

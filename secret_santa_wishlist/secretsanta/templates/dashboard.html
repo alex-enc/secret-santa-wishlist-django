@@ -1,13 +1,62 @@
 {% extends 'logged_in_base.html' %}
+{% load static %}
+<head>
+    <link href="{% static 'dashboard.css' %}" rel="stylesheet">
+</head>
 {% block body %}
+
 <h1>Dashboard</h1>
-<div class="card m-5">
-    <div class="card-header">
-        <h3>Create Your Secret Santa Gift Exchange Group</h3>
-    </div>
-    <div class="card-body">
-        <a href="{% url 'create_group' %}" class="btn btn-secondary">Create Group</a>
+<div class="container-fluid dashboard">
+    <div class="row h-100">
+        <!-- Left-hand side -->
+        <div class="col-md-6 left-column">
+            <div class="row">
+                  <!-- Two columns inside the left column -->
+                <div class="col-md-6">
+                    <div class="widget">
+                        <!-- Create Group -->
+                        <div class="card">
+                            <div class="card-header">
+                                <h3>Create Your Secret Santa Gift Exchange Group</h3>
+                            </div>
+                            <div class="card-body">
+                                <a href="{% url 'create_group' %}" class="btn btn-secondary">Create Group</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="widget">
+                        <!-- Join Group -->
+                        <div class="card">
+                            <div class="card-header">
+                                <h3>Join Group</h3>
+                            </div>
+                            <div class="card-body">
+                                <a href="{% url 'create_group' %}" class="btn btn-secondary">Join Group</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+           
+            <div class="widget">Group Members' Wishlists</div>
+            <div class="widget">Additional Widget</div>
+            <!-- Add more widgets as needed -->
+        </div>
+
+        <!-- Right-hand side -->
+        <div class="col-md-6 right-column">
+            <h2>My Wishlist</h2>
+            <ul class="list-group">
+                <li class="list-group-item">Wishlist Item 1</li>
+                <li class="list-group-item">Wishlist Item 2</li>
+                <li class="list-group-item">Wishlist Item 3</li>
+                <!-- Add more wishlist items as needed -->
+            </ul>
+        </div>
     </div>
 </div>
+
 {% endblock %}
 
