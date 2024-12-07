@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from secretsanta.forms.sign_up_form import SignUpForm
 from secretsanta.forms.log_in_form import LogInForm 
@@ -60,10 +61,12 @@ def new_group_info(request):
 
     return render(request, 'new_group_info.html', {'form': form})
 
+@login_required
 def create_group(request):
     if request.method == 'POST':
         form = CreateGroupForm(request.POST)
         if form.is_valid():
+            # group = form.cleaned_data['group']
             form.save(admin=request.user)  # Set the logged-in user as the admin
             messages.success(request, 'Group created successfully!')
             return redirect('dashboard')  # Redirect to the dashboard or any other page
