@@ -14,3 +14,15 @@ class Group(models.Model):
     code = models.CharField(max_length=8, unique=True, blank=False)  # Random unique code
     # users = models.ManyToManyField('User', related_name='user_groups')  # Group members
     admin = models.ForeignKey(User, related_name='admin_groups', on_delete=models.CASCADE)  # Admin who created the group
+
+class GroupMember(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='group_memberships')  # Links to User model
+    group = models.ForeignKey(Group, on_delete=models.CASCADE, related_name='members')  # Links to Group model
+    date_joined = models.DateTimeField(auto_now_add=True)  # When the user joined the group
+    is_admin = models.BooleanField(default=False)  # Whether the user is an admin of the group
+
+    class Meta:
+        unique_together = ('user', 'group')  # Ensures a user cannot join the same group twice
+
+    def __str__(self):
+        return f"{self.user.username} in {self.group.name} (Code: {self.group.code})"
