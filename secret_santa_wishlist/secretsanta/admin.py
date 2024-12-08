@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import User, Group
+from .models import User, Group, GroupMember
 
 # Register your models here.
 @admin.register(User)
@@ -16,3 +16,8 @@ class GroupAdmin(admin.ModelAdmin):
     list_display = ('name', 'code', 'admin')  # Display group name, code, and admin in the admin panel
     search_fields = ('name', 'code', 'admin__username')  # Add search capabilities
 
+@admin.register(GroupMember)
+class GroupMemberAdmin(admin.ModelAdmin):
+    """Configuration of the admin interface for group members. """
+    list_display = ('user', 'group', 'date_joined', 'is_admin')  # Display group name, code, and admin in the admin panel
+    search_fields = ('user', 'group', 'date_joined', 'is_admin')  # Add search capabilities
