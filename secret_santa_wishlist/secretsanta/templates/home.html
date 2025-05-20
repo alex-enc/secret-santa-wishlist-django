@@ -1,24 +1,30 @@
 {% extends 'base.html' %}
 {% block body %}
-<div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
+
+<div id="carouselExampleInterval" class="carousel slide christmas-carousel" data-bs-ride="carousel" data-bs-interval="2500">
     <div class="carousel-inner">
-      <div class="carousel-item active" data-bs-interval="10000">
-        <img src="..." class="d-block w-100" alt="...">
-      </div>
-      <div class="carousel-item" data-bs-interval="2000">
-        <img src="..." class="d-block w-100" alt="...">
-      </div>
-      <div class="carousel-item">
-        <img src="..." class="d-block w-100" alt="...">
-      </div>
+        <div class="carousel-item active">
+            <img src="/static/images/placeholder-white.png" class="d-block w-100" alt="...">
+        </div>
+        <div class="carousel-item">
+            <img src="/static/images/placeholder-red.png" class="d-block w-100" alt="...">
+        </div>
+        <div class="carousel-item">
+            <img src="/static/images/placeholder-green.png" class="d-block w-100" alt="...">
+        </div>
     </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Next</span>
-    </button>
-  </div>
+</div>
+<div style="justify-content: center; display: flex; text-align: center;">
+    <div class="mb-3">
+        <h1>Start your Secret Santa group today and share <br>your wishlists with holiday magic!</h1>
+    </div>
+    <br>
+</div>
+<div style="justify-content: center; display: flex;">
+    <div class="mb-3">
+        <button type="button" class="btn btn-sign-up">SIGN UP</button>
+    </div>
+</div>
+
+
 {% endblock %}
