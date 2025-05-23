@@ -15,9 +15,9 @@
     background-color: #BA1104;
     color: #E9EFCB;
     border-radius: 25px;
-    font-size: 20px;
+    font-size: 15px;
     font-weight: 600;
-    padding: 10px 20px 10px 20px;
+    padding: 8px 15px 8px 15px;
 }
 
 h1{
@@ -30,4 +30,14 @@ h1{
     color: #1F662E !important;
     font-weight: 800;
     font-size: 28px;
+}
+
+a.no-underline {
+    text-decoration: none;
+}
+
+.login-btn {
+    color: #BA1104;
+    font-size: 15px;
+    font-weight: 600;
 }
