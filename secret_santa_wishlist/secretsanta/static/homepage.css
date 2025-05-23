@@ -1,8 +1,18 @@
 .christmas-carousel {
     padding-bottom: 10vh;
 }
+
 .btn-sign-up {
-    background-color: #950E03;
+    background-color: #BA1104;
+    color: #E9EFCB;
+    border-radius: 25px;
+    font-size: 20px;
+    font-weight: 600;
+    padding: 10px 20px 10px 20px;
+}
+
+.nav-sign-up {
+    background-color: #BA1104;
     color: #E9EFCB;
     border-radius: 25px;
     font-size: 20px;
@@ -13,5 +23,11 @@
 h1{
     font-size: 36px;
     font-weight: 600;
-    color: #950E03;
+    color: #BA1104;
+}
+
+.secretsanta-logo {
+    color: #1F662E !important;
+    font-weight: 800;
+    font-size: 28px;
 }
