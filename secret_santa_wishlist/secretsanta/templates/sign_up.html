@@ -2,8 +2,11 @@
 {% block body %}
 <div class="container">
     <div class="row">
-        <div class="col-12">
-            <h1>Sign Up</h1>
+        <div class="col-8 mx-auto">
+            <div class="text-center">
+                <h1>Welcome to SecretSanta</h1>
+                <h5>Create an account to make gift giving easier this Christmas!</h5>
+            </div>
             <form action="{% url 'sign_up'%}" method="post">
                 {% csrf_token %}
                 {% include 'partials/bootstrap_form.html' with form=form %}
