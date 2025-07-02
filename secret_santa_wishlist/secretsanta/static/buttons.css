@@ -6,3 +6,13 @@
     font-weight: 600;
     padding: 10px 20px 10px 20px;
 }
+
+a.link-red {
+    color: #BA1104 !important;
+    text-decoration: underline;
+}
+
+a.link-red:hover {
+    color: #440000;
+    text-decoration: none;
+}
