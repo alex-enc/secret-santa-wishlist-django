@@ -16,3 +16,9 @@ a.link-red:hover {
     color: #440000;
     text-decoration: none;
 }
+
+.nav-btn {
+    color: #BA1104;
+    font-size: 15px;
+    font-weight: 600;
+}
