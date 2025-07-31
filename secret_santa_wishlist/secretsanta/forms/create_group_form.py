@@ -6,19 +6,43 @@ import random
 class CreateGroupForm(forms.ModelForm):
     class Meta:
         model = Group
-        fields = ['name']  # Only the group name is required from the user
+        fields = ['name', 'group_type']  # includes group_type and name of the group
+        # fields = ['group_type, name']  # includes group_type and name of the group
+        widgets = {
+            'group_type': forms.Select(attrs={'class': 'form-select'}),
+        }
+    def __init__(self, *args, **kwargs):
+        self.admin_user = kwargs.pop('admin', None)
+        super().__init__(*args, **kwargs)
 
-    def save(self, commit=True, admin=None):
+    def save(self):
         """Create a new group with a random unique code and set the admin."""
         
-        group = super().save(commit=False)
-        group.code = ''.join(random.choices(string.ascii_uppercase + string.digits, k=8))  # Generate random code
+        super().save(commit=False)
+        group = Group(
+            name=self.cleaned_data.get('name'),
+            group_type=self.cleaned_data.get('group_type'),
+            code=''.join(random.choices(string.ascii_uppercase + string.digits, k=8)),
+            admin = self.admin_user
+        )
+        group.save()
+        # group.code = ''.join(random.choices(string.ascii_uppercase + string.digits, k=8))  # Generate random code
         
-        # Assign the admin if provided
-        if admin:
-            group.admin = admin
+        # Assign the admin since they are creating the group
+        # group.admin = self.admin_user
 
-        if commit:
-            group.save()
-            group.members.add(admin)  # Add the admin as the first group member
+        # if commit:
+        #     group.save()
+        #     group.members.add(admin)  # Add the admin as the first group member
         return group
+
+
+        super().save(commit=False)
+        user = User.objects.create_user(
+            self.cleaned_data.get('username'),
+            first_name=self.cleaned_data.get('first_name'),
+            last_name=self.cleaned_data.get('last_name'),
+            email=self.cleaned_data.get('email'),
+            password=self.cleaned_data.get('new_password'),
+        )
+        return user

@@ -21,9 +21,6 @@ class Group(models.Model):
     group_type = models.CharField(max_length=20, choices=GROUP_TYPE_CHOICES, default='family_friends')
     admin = models.ForeignKey(User, related_name='admin_groups', on_delete=models.CASCADE)  # Admin who created the group
 
-    def __str__(self):
-        return f"{self.name} ({self.get_group_type_display()})"
-    
 class GroupMember(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)  # Links to User model
     group = models.ForeignKey(Group, on_delete=models.CASCADE)  # Links to Group model

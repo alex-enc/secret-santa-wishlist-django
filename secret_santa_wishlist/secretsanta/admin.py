@@ -13,8 +13,8 @@ class UserAdmin(admin.ModelAdmin):
 @admin.register(Group)
 class GroupAdmin(admin.ModelAdmin):
     """Configuration of the admin interface for groups. """
-    list_display = ('name', 'code', 'admin')  # Display group name, code, and admin in the admin panel
-    search_fields = ('name', 'code', 'admin__username')  # Add search capabilities
+    list_display = ('name', 'code', 'group_type', 'admin')  # Display group name, code, and admin in the admin panel
+    search_fields = ('name', 'code', 'group_type', 'admin__username')  # Add search capabilities
 
 @admin.register(GroupMember)
 class GroupMemberAdmin(admin.ModelAdmin):
