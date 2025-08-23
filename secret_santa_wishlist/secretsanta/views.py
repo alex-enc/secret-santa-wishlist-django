@@ -64,15 +64,16 @@ def new_group_info(request):
 @login_required
 def create_group(request):
     if request.method == 'POST':
-        form = CreateGroupForm(request.POST, admin=request.user)
+        form = CreateGroupForm(request.POST)
         print(form.is_bound)
         if form.is_valid():
             print("Form is valid")
             # group = form.cleaned_data['group']
             # group = form.save()
-            form.save()  # Set the logged-in user as the admin
+            group = form.save(admin=request.user)
+            # form.save()  # Set the logged-in user as the admin
             messages.success(request, 'Group created successfully!')
-            return redirect('dashboard')  # Redirect to the dashboard or any other page
+            return redirect('create_group')  # Redirect to the dashboard or any other page
         else:
             messages.error(request, 'There was an error creating the group.')
     else:
