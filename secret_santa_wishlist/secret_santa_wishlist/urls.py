@@ -26,4 +26,5 @@ urlpatterns = [
     path('dashboard/', views.dashboard, name='dashboard'),
     path('new_group_info/', views.new_group_info, name='new_group_info'),
     path('create_group/', views.create_group, name='create_group'),
+    path('my_groups/', views.my_groups, name='my_groups'),
 ]

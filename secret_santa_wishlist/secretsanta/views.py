@@ -81,6 +81,26 @@ def create_group(request):
 
     return render(request, 'create_group.html', {'form': form})
 
+@login_required
+def my_groups(request):
+    # if request.method == 'POST':
+    #     form = CreateGroupForm(request.POST)
+    #     print(form.is_bound)
+    #     if form.is_valid():
+    #         print("Form is valid")
+    #         # group = form.cleaned_data['group']
+    #         # group = form.save()
+    #         group = form.save(admin=request.user)
+    #         # form.save()  # Set the logged-in user as the admin
+    #         messages.success(request, 'Group created successfully!')
+    #         return redirect('create_group')  # Redirect to the dashboard or any other page
+    #     else:
+    #         messages.error(request, 'There was an error creating the group.')
+    # else:
+    #     form = CreateGroupForm()
+
+    return render(request, 'my_groups.html')
+
 def log_out(request):
     logout(request)
     return redirect('home')
