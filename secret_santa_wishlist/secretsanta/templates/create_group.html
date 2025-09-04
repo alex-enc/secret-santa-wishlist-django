@@ -1,10 +1,10 @@
 {% extends 'logged_in_base.html' %}
 {% block body %}
-<form action="{% url 'create_group' %}"method="POST" id="create-group-form">
+<form action="{% url 'create_group' %}" method="post">
     {% csrf_token %}
     {% include 'partials/bootstrap_form.html' with form=form %}
     {% include 'partials/messages.html' with messages=messages %}
-
-
+    <input type="submit" value="Create Group" class="btn btn-primary" style="width:18rem;">
+</form>
 
 {% endblock %}

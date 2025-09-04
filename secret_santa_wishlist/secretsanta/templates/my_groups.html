@@ -1,6 +1,29 @@
 {% extends 'logged_in_base.html' %}
 {% block body %}
 <h1>MY GROUPS</h1>
+<h2>Groups You Created</h2>
+<ul>
+  {% for group in created_groups %}
+    <li>
+      <strong>{{ group.name }}</strong> (Code: {{ group.code }})  
+      Members: {{ group.memberships.count }}
+    </li>
+  {% empty %}
+    <li>You haven’t created any groups yet.</li>
+  {% endfor %}
+</ul>
+
+<h2>Groups You Joined</h2>
+<ul>
+  {% for group in member_groups %}
+    <li>
+      <strong>{{ group.name }}</strong> (Code: {{ group.code }})  
+    </li>
+  {% empty %}
+    <li>You haven’t joined any groups yet.</li>
+  {% endfor %}
+</ul>
+
 
 
 

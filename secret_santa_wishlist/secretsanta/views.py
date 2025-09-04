@@ -1,5 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
+from secretsanta.models import GroupMember, Group
 from secretsanta.forms.sign_up_form import SignUpForm
 from secretsanta.forms.log_in_form import LogInForm 
 from secretsanta.forms.create_group_form import CreateGroupForm 
@@ -66,14 +67,12 @@ def create_group(request):
     if request.method == 'POST':
         form = CreateGroupForm(request.POST)
         print(form.is_bound)
+        
         if form.is_valid():
             print("Form is valid")
-            # group = form.cleaned_data['group']
-            # group = form.save()
-            group = form.save(admin=request.user)
-            # form.save()  # Set the logged-in user as the admin
+            form.save(admin=request.user)
             messages.success(request, 'Group created successfully!')
-            return redirect('create_group')  # Redirect to the dashboard or any other page
+            return redirect('my_groups')  # Redirect to the dashboard or any other page
         else:
             messages.error(request, 'There was an error creating the group.')
     else:
@@ -83,23 +82,11 @@ def create_group(request):
 
 @login_required
 def my_groups(request):
-    # if request.method == 'POST':
-    #     form = CreateGroupForm(request.POST)
-    #     print(form.is_bound)
-    #     if form.is_valid():
-    #         print("Form is valid")
-    #         # group = form.cleaned_data['group']
-    #         # group = form.save()
-    #         group = form.save(admin=request.user)
-    #         # form.save()  # Set the logged-in user as the admin
-    #         messages.success(request, 'Group created successfully!')
-    #         return redirect('create_group')  # Redirect to the dashboard or any other page
-    #     else:
-    #         messages.error(request, 'There was an error creating the group.')
-    # else:
-    #     form = CreateGroupForm()
-
-    return render(request, 'my_groups.html')
+    user = request.user
+    created_groups = user.admin_groups.all()  # groups this user created
+    # groups = user.groups.all() # groups the user belongs to
+    member_groups = Group.objects.filter(memberships__user=user).distinct()
+    return render(request, "my_groups.html", {"created_groups": created_groups, "member_groups": member_groups})
 
 def log_out(request):
     logout(request)
