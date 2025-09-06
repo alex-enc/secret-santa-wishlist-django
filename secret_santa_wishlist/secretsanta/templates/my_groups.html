@@ -11,6 +11,22 @@
             <h4 class="card-title">{{ group.name }}</h4>
             <h6 class="card-subtitle mb-2">Code: {{ group.code }}</h6>
             <p class="card-text">Members: {{ group.memberships.count }}</p>
+            <div class="align-right">
+                <a class="btn btn-red" data-bs-toggle="collapse" href="#groupMembersToggle" role="button" aria-expanded="false" aria-controls="collapseExample">
+                    <img src="/static/images/chevron-down.png" class="cream-text">
+                </a>
+            </div>
+            <div class="collapse" id="groupMembersToggle">
+                <div class="card card-red card-body cream-text">
+                    <ul>
+                        {% for membership in group.memberships.all %}
+                            <li>{{ membership.user.username }}</li>
+                        {% empty %}
+                            <li>No members yet</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
     {% empty %}

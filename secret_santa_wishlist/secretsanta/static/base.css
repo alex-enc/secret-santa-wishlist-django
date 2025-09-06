@@ -18,3 +18,9 @@
 .cream-text {
     color: #E9EFCB;
 }
+
+.align-right {
+  display: flex;
+  justify-content: flex-end; /* push to the right */
+  margin-top: auto;          /* push it to the bottom if card grows */
+}
