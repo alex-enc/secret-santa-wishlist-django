@@ -10,3 +10,11 @@
   gap: 1rem;             /* space between cards */
   margin-top: 2rem;
 }
+
+.card-red {
+    background-color: #BA1104
+}
+
+.cream-text {
+    color: #E9EFCB;
+}
