@@ -1,22 +1,27 @@
 {% extends 'logged_in_base.html' %}
 {% block body %}
-<h1>MY GROUPS</h1>
+<div style="text-align: center;">
+    <h1>MY GROUPS</h1>
+</div>
 
-{% for group in member_groups %}
-<div class="card" style="width: 50rem;">
-    <div class="card-body">
-        <h5 class="card-title">{{ group.name }}</h5>
-        <h6 class="card-subtitle mb-2 text-body-secondary">Code: {{ group.code }}</h6>
-        <p class="card-text">Members: {{ group.memberships.count }}</p>
+<div class="center-cards">
+    {% for group in member_groups %}
+    <div class="card" style="width: 50rem;">
+        <div class="card-body">
+            <h5 class="card-title">{{ group.name }}</h5>
+            <h6 class="card-subtitle mb-2 text-body-secondary">Code: {{ group.code }}</h6>
+            <p class="card-text">Members: {{ group.memberships.count }}</p>
+        </div>
     </div>
-</div>
-{% empty %}
-<div class="card">
-    <div class="card-body">
-        You aren't in any groups yet.
+    {% empty %}
+    <div class="card">
+        <div class="card-body">
+            You aren't in any groups yet.
+        </div>
     </div>
+    {% endfor %}
+    </br>
 </div>
-{% endfor %}
 
 
 
