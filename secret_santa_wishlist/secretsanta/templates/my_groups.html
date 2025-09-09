@@ -6,21 +6,23 @@
 
 <div class="center-cards">
     {% for group in member_groups %}
-    <div class="card card-red" style="width: 50rem;">
-        <div class="card-body cream-text">
-            <h4 class="card-title">{{ group.name }}</h4>
-            <h6 class="card-subtitle mb-2">Code: {{ group.code }}</h6>
-            <p class="card-text">Members: {{ group.memberships.count }}</p>
-            <div class="align-right">
-            <a class="btn btn-red" 
-                data-bs-toggle="collapse" 
-                data-bs-target="#groupMembersToggle{{ group.id }}" 
-                role="button" 
-                aria-expanded="false" 
-                aria-controls="groupMembersToggle{{ group.id }}">
-                <img src="/static/images/chevron-down.png">
-            </a>
+    <div class="card card-red" style="width: 50rem; height: auto;">
+        <div class="card-body cream-text" style="flex-direction: row;">
+            <div class="align-left">
+                <h3 class="card-title">{{ group.name }}</h3>
+                <h6 class="card-subtitle mb-2">Code: {{ group.code }}</h6>
+                <p class="card-text">Members: {{ group.memberships.count }}</p>
             </div>
+            <!-- <div class="align-right"> -->
+                <a class="btn btn-red" 
+                    data-bs-toggle="collapse" 
+                    data-bs-target="#groupMembersToggle{{ group.id }}" 
+                    role="button" 
+                    aria-expanded="false" 
+                    aria-controls="groupMembersToggle{{ group.id }}">
+                    <img src="/static/images/chevron-down.png">
+                </a>
+            <!-- </div> -->
             <div class="collapse" id="groupMembersToggle{{ group.id }}">
                 <div class="card card-red card-body cream-text">
                     <ul>
@@ -47,7 +49,9 @@
     </div>
     {% endfor %}
     </br>
+   
 </div>
+
 
 
 
