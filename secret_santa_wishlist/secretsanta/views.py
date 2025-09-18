@@ -4,8 +4,9 @@ from secretsanta.models import GroupMember, Group
 from secretsanta.forms.sign_up_form import SignUpForm
 from secretsanta.forms.log_in_form import LogInForm 
 from secretsanta.forms.create_group_form import CreateGroupForm 
+from secretsanta.forms.join_group_form import JoinGroupForm 
 from django.contrib.auth import authenticate, login, logout
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib import messages
 
 # Create your views here.
@@ -36,7 +37,7 @@ def log_in(request):
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
-                return redirect('dashboard')  # Change 'dashboard' to your redirect URL
+                return redirect('dashboard') 
             else:
                 messages.error(request, 'Invalid username or password.')  # Add error message
         else:
@@ -46,7 +47,26 @@ def log_in(request):
     return render(request, 'log_in.html', {'form': form})
 
 def dashboard(request):
-    return render(request, 'dashboard.html') 
+    join_group_form = JoinGroupForm(request.POST)
+    if join_group_form.is_valid():
+        group_code = join_group_form.cleaned_data["group_code"] 
+        # Check if a group with this code exists
+        try:
+            group = Group.objects.get(code=group_code)
+        except Group.DoesNotExist:
+            messages.error(request, 'Invalid group code.')
+        else:
+            # Add user as member if not already a member
+            GroupMember.objects.get_or_create(
+                user=request.user,
+                group=group,
+                defaults={"is_admin": False},
+            )
+            messages.success(request, f"You have successfully joined {group.name}.")
+            return redirect("dashboard")
+    else:
+        join_group_form = JoinGroupForm()
+    return render(request, "dashboard.html", {"join_group_form": join_group_form, })
 
 def new_group_info(request):
     if request.method == 'POST':

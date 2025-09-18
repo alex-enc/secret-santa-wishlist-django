@@ -32,7 +32,13 @@
                                 <h3>Join Group</h3>
                             </div>
                             <div class="card-body">
-                                <a href="{% url 'create_group' %}" class="btn btn-secondary">Join Group</a>
+                                <form method="post" action="">
+                                {% csrf_token %}
+                                {% include 'partials/messages.html' with messages=messages %}
+                                {{ join_group_form.as_p }}
+                                <button type="submit" class="btn btn-light mt-2">Join</button>
+                                </form>
+
                             </div>
                         </div>
                     </div>
