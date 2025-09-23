@@ -11,7 +11,8 @@ class User(AbstractUser):
 # Group Model
 class Group(models.Model):
     GROUP_TYPE_CHOICES = [
-        ('family_friends', 'Family & Friends'),
+        ('family', 'Family'),
+        ('friends', 'Friends'),
         ('work', 'Work'),
     ]
 
