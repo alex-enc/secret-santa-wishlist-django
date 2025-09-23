@@ -31,8 +31,8 @@ class CreateGroupForm(forms.ModelForm):
             # Add admin as first member
             
             GroupMember.objects.create(group=group, user=admin, is_admin=True)
-            if admin:   
-                group.members.add(admin)  # ensure admin is a member too
+            # if admin:   
+            #     GroupMember.members.add(admin)  # ensure admin is a member too
         return group
 
 
