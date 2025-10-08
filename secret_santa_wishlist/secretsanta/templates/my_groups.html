@@ -4,16 +4,27 @@
     <h1>MY GROUPS</h1>
 </div>
 
+<div class="row text-center">
+  <div class="col-6 col-md-4">.col-6 .col-md-4</div>
+  <div class="col-6 col-md-4">.col-6 .col-md-4</div>
+  <div class="col-6 col-md-4">.col-6 .col-md-4</div>
+</div>
+
 <div class="center-cards">
     {% for group in member_groups %}
     <div class="card card-red" style="width: 50rem; height: auto;">
-        <div class="card-body cream-text" style="flex-direction: row;">
-            <div class="align-left">
+       
+        <div class="card-body cream-text row">
+            <div class="col-12 col-md-9">
                 <h3 class="card-title">{{ group.name }}</h3>
                 <h6 class="card-subtitle mb-2">Code: {{ group.code }}</h6>
                 <p class="card-text">Members: {{ group.memberships.count }}</p>
             </div>
-            <!-- <div class="align-right"> -->
+            <div class="col-6 col-md-3">
+                <!-- if user is the admin, show the generate button -->
+                {% if group.admin %}
+                    <input type="submit" value="Generate" class="btn btn-red" style="width:8rem;">
+                {% endif %}
                 <a class="btn btn-red" 
                     data-bs-toggle="collapse" 
                     data-bs-target="#groupMembersToggle{{ group.id }}" 
@@ -22,7 +33,7 @@
                     aria-controls="groupMembersToggle{{ group.id }}">
                     <img src="/static/images/chevron-down.png">
                 </a>
-            <!-- </div> -->
+            </div>
             <div class="collapse" id="groupMembersToggle{{ group.id }}">
                 <div class="card card-red card-body cream-text">
                     <ul>
