@@ -106,7 +106,7 @@ def my_groups(request):
     created_groups = user.admin_groups.all()  # groups this user created
     # groups = user.groups.all() # groups the user belongs to
     member_groups = Group.objects.filter(memberships__user=user).distinct()
-    return render(request, "my_groups.html", {"created_groups": created_groups, "member_groups": member_groups})
+    return render(request, "my_groups.html", {"created_groups": created_groups, "member_groups": member_groups, "user": user})
 
 def log_out(request):
     logout(request)

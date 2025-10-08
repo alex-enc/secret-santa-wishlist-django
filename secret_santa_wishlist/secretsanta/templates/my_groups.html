@@ -4,12 +4,6 @@
     <h1>MY GROUPS</h1>
 </div>
 
-<div class="row text-center">
-  <div class="col-6 col-md-4">.col-6 .col-md-4</div>
-  <div class="col-6 col-md-4">.col-6 .col-md-4</div>
-  <div class="col-6 col-md-4">.col-6 .col-md-4</div>
-</div>
-
 <div class="center-cards">
     {% for group in member_groups %}
     <div class="card card-red" style="width: 50rem; height: auto;">
@@ -22,7 +16,7 @@
             </div>
             <div class="col-6 col-md-3">
                 <!-- if user is the admin, show the generate button -->
-                {% if group.admin %}
+                {% if user == group.admin %}
                     <input type="submit" value="Generate" class="btn btn-red" style="width:8rem;">
                 {% endif %}
                 <a class="btn btn-red" 
