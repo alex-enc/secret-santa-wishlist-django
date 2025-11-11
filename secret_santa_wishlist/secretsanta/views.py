@@ -1,6 +1,7 @@
+from datetime import datetime
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
-from secretsanta.models import GroupMember, Group
+from secretsanta.models import GroupMember, Group, Assignment
 from secretsanta.forms.sign_up_form import SignUpForm
 from secretsanta.forms.log_in_form import LogInForm 
 from secretsanta.forms.create_group_form import CreateGroupForm 
@@ -8,6 +9,7 @@ from secretsanta.forms.join_group_form import JoinGroupForm
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib import messages
+from secretsanta.user_delegation import generate_secret_santa_assignments
 
 # Create your views here.
 def home(request):
@@ -107,6 +109,30 @@ def my_groups(request):
     # groups = user.groups.all() # groups the user belongs to
     member_groups = Group.objects.filter(memberships__user=user).distinct()
     return render(request, "my_groups.html", {"created_groups": created_groups, "member_groups": member_groups, "user": user})
+
+@login_required
+def generate_assignments(request, group_id):
+    group = get_object_or_404(Group, id=group_id)
+    user = request.user
+
+    if group.admin != user:
+        messages.error(request, "Only the group admin can generate assignments.")
+        return redirect("my_groups")
+
+    current_year = datetime.now().year
+    if Assignment.objects.filter(group=group, year=current_year).exists():
+        messages.warning(request, "Assignments have already been generated for this year.")
+        return redirect("my_groups")
+
+    success = generate_secret_santa_assignments(group)
+
+    if success:
+        messages.success(request, "Secret Santa assignments generated successfully!")
+    else:
+        messages.error(request, "Failed to generate assignments. Try again later.")
+
+    return redirect("my_groups")
+
 
 def log_out(request):
     logout(request)

@@ -17,7 +17,10 @@
             <div class="col-6 col-md-3">
                 <!-- if user is the admin, show the generate button -->
                 {% if user == group.admin %}
-                    <input type="submit" value="Generate" class="btn btn-red" style="width:8rem;">
+                    <form action="{% url 'generate_assignments' group.id %}" method="post" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-red">Generate</button>
+                    </form>
                 {% endif %}
                 <a class="btn btn-red" 
                     data-bs-toggle="collapse" 

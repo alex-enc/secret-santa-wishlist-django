@@ -1,35 +1,67 @@
-# Write a function that delegates the user a random user. Make sure they did not have them the past 3 years.
-
 import random
-from datetime import datetime, timedelta
-from secret_santa_wishlist.secretsanta.models import User, Assignment
-def delegate_user(current_user):
-    # Get the current year
-    current_year = datetime.now().year
-    
-    # Get the list of users that the current user has been assigned in the past 3 years
-    past_assignments = Assignment.objects.filter(
-        giver=current_user,
-        year__gte=current_year - 3
-    ).values_list('receiver_id', flat=True)
-    
-    # Get all users excluding the current user and those they have been assigned in the past 3 years
-    eligible_users = User.objects.exclude(
-        id__in=past_assignments
-    ).exclude(
-        id=current_user.id
-    )
-    
-    # If there are no eligible users, return None
-    if not eligible_users.exists():
-        return None
-    
-    # Randomly select an eligible user
-    selected_user = random.choice(eligible_users)
-    
-    return selected_user    
+from datetime import datetime
+from .models import Assignment
 
-# Example usage:
-# current_user = User.objects.get(id=1)  # Replace with actual user retrieval
-# assigned_user = delegate_user(current_user)
-# print(f"Assigned user: {assigned_user}")
+def generate_secret_santa_assignments(group):
+    """
+    Randomly assign each member in a group another member to gift to.
+    Avoids giving someone they had in the last 3 years (if possible).
+    Saves assignments to the database.
+    """
+
+    members = [m.user for m in group.memberships.all()]
+
+    current_year = datetime.now().year
+
+    if len(members) < 2:
+        return False  # Not enough members to assign
+
+    # Build exclusion history for each member
+    exclusion_map = {}
+    for giver in members:
+        recent_receivers = Assignment.objects.filter(
+            giver=giver,
+            group=group,
+            year__gte=current_year - 3
+        ).values_list("receiver_id", flat=True)
+        exclusion_map[giver.id] = set(recent_receivers) | {giver.id}  # Can't gift themselves either
+
+    # Attempt to find valid assignments
+    attempts = 0
+    while attempts < 500:
+        receivers = members[:]
+        random.shuffle(receivers)
+
+        valid = True
+        for giver, receiver in zip(members, receivers):
+            if receiver.id in exclusion_map[giver.id]:
+                valid = False
+                break
+
+        if valid:
+            # Success — save assignments
+            for giver, receiver in zip(members, receivers):
+                Assignment.objects.create(
+                    giver=giver,
+                    receiver=receiver,
+                    group=group,
+                    year=current_year
+                )
+            return True  # Done!
+
+        attempts += 1
+
+    # If no perfect match found, relax constraint and try again
+    # (for very small groups)
+    receivers = members[:]
+    random.shuffle(receivers)
+    for giver, receiver in zip(members, receivers):
+        if giver != receiver:
+            Assignment.objects.create(
+                giver=giver,
+                receiver=receiver,
+                group=group,
+                year=current_year
+            )
+
+    return True
