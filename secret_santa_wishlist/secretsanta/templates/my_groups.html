@@ -19,6 +19,7 @@
                 {% if user == group.admin %}
                     <form action="{% url 'generate_assignments' group.id %}" method="post" style="display:inline;">
                         {% csrf_token %}
+                        {% include 'partials/messages.html' with messages=messages %}
                         <button type="submit" class="btn btn-red">Generate</button>
                     </form>
                 {% endif %}

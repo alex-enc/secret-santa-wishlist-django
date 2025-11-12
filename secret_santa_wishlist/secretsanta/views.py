@@ -109,9 +109,9 @@ def my_groups(request):
     # groups = user.groups.all() # groups the user belongs to
     member_groups = Group.objects.filter(memberships__user=user).distinct()
     # Find the user’s assignments for the current year
-    # current_year = datetime.now().year
+    current_year = datetime.now().year
    
-    current_year = 2025  # hardcode this for now; replace with datetime.now().year once tested
+    # current_year = 2025  # hardcode this for now; replace with datetime.now().year once tested
 
     # All assignments where this user is the giver
     user_assignments = Assignment.objects.filter(giver=user, year=current_year)
