@@ -42,7 +42,7 @@
                 <ul>
                     {% for membership in group.memberships.all %}
                         <li>
-                            {{ membership.user.username }}
+                            {{ membership.user.first_name }} {{ membership.user.last_name }}
                             {% if membership.is_admin %}
                                 <span class="badge bg-warning text-dark">Admin</span>
                             {% endif %}
