@@ -15,8 +15,8 @@
                 <p class="card-text">Members: {{ group.memberships.count }}</p>
             </div>
             <div class="col-6 col-md-3">
-                <!-- if user is the admin, show the generate button -->
-                {% if user == group.admin %}
+                <!-- if user is the admin and assignments haven't already been generated, show the generate button -->
+                {% if user == group.admin and not group.assigned_receiver%}
                     <form action="{% url 'generate_assignments' group.id %}" method="post" style="display:inline;">
                         {% csrf_token %}
                         {% include 'partials/messages.html' with messages=messages %}
@@ -27,28 +27,7 @@
                 <button type="button" class="btn btn-red" data-bs-toggle="modal" data-bs-target="#whoDidIDrawModal">
                     Who did I draw?
                 </button>
-                <!-- Modal -->
-                <div class="modal fade" id="whoDidIDrawModal" tabindex="-1" aria-labelledby="whoDidIDrawModalLabel" aria-hidden="true">
-                    <!-- Vertically centered modal -->
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="whoDidIDrawModalLabel">Who Did I Draw?</h1>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                {% if group.assigned_receiver %}
-                                    <p> {{ group.assigned_receiver.first_name }} {{ group.assigned_receiver.last_name }}</p>
-                                {% else %}
-                                    <p><em>Assignments have not been generated yet.</em></p>
-                                {% endif %}
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            </div>
-                        </div>
-                </div>
-                </div>
+            </div>
                 <a class="btn btn-red" 
                     data-bs-toggle="collapse" 
                     data-bs-target="#groupMembersToggle{{ group.id }}" 
@@ -75,7 +54,25 @@
                 </div>
             </div>
         </div>
-    </div>
+         <!-- Modal -->
+        <div class="modal fade" id="whoDidIDrawModal" tabindex="-1" aria-labelledby="whoDidIDrawModalLabel" aria-hidden="true">
+            <!-- Vertically centered modal -->
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="whoDidIDrawModalLabel">Who Did I Draw?</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        {% if group.assigned_receiver %}
+                            <p> {{ group.assigned_receiver.first_name }} {{ group.assigned_receiver.last_name }}</p>
+                        {% else %}
+                            <p><em>Assignments have not been generated yet.</em></p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
     {% empty %}
     <div class="card card-red cream-text">
         <div class="card-body">
