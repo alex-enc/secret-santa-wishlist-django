@@ -151,6 +151,12 @@ def generate_assignments(request, group_id):
 
     return redirect("my_groups")
 
+@login_required
+def profile(request):
+    user = request.user
+    
+    return render(request, "profile.html", {'user': user})
+
 
 
 

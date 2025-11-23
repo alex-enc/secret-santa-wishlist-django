@@ -1,0 +1,18 @@
+{% extends 'logged_in_base.html' %}
+{% block body %}
+<div style="text-align: center;">
+    <h1>MY PROFILE</h1>
+</div>
+<div class="center-cards">
+    <div class="card card-red" style="width: 50rem; height: auto;">
+        <div class="card-body cream-text row">
+            <div class="col-12 col-md-9">
+                <h6 class="card-subtitle mb-2">NAME: {{ user.first_name }} {{ user.last_name }}</h6>
+                <h6 class="card-subtitle mb-2">EMAIL: {{ user.email }}</h6>
+            </div>
+        </div>
+    
+    </div>
+
+{% endblock %}
+

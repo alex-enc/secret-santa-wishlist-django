@@ -27,5 +27,6 @@ urlpatterns = [
     path('new_group_info/', views.new_group_info, name='new_group_info'),
     path('create_group/', views.create_group, name='create_group'),
     path('my_groups/', views.my_groups, name='my_groups'),
-       path("generate_assignments/<int:group_id>/", views.generate_assignments, name="generate_assignments"),
+    path("generate_assignments/<int:group_id>/", views.generate_assignments, name="generate_assignments"),
+    path('profile/', views.profile, name='profile'),
 ]
