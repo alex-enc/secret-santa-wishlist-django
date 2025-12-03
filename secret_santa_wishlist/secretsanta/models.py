@@ -33,7 +33,7 @@ class GroupMember(models.Model):
     def __str__(self):
         return f"{self.group.name} -- Code: {self.group.code}"
 
-#Write a model for Assignment
+
 class Assignment(models.Model):
     giver = models.ForeignKey(User, related_name='given_assignments', on_delete=models.CASCADE)  # User who gives the gift
     receiver = models.ForeignKey(User, related_name='received_assignments', on_delete=models.CASCADE)  # User who receives the gift
@@ -45,3 +45,24 @@ class Assignment(models.Model):
 
     def __str__(self):
         return f"{self.giver.username} -> {self.receiver.username} ({self.year}) in {self.group.name}"
+    
+
+class Wishlist(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="wishlists")
+    group = models.ForeignKey(Group, on_delete=models.CASCADE, related_name="wishlists")
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ("user", "group")  # Ensures each user has only one wishlist per group
+
+class WishlistItem(models.Model):
+    wishlist = models.ForeignKey(Wishlist, on_delete=models.CASCADE, related_name="items")
+    item_name = models.CharField(max_length=255)
+    item_url = models.URLField(blank=True, null=True)
+    description = models.TextField(blank=True, null=True)
+    taken = models.BooleanField(default=False)  # Whether the item has been taken by a giver
+    created_at = models.DateTimeField(auto_now_add=True)
+    
+    def __str__(self):
+        return self.item_name   
+    
