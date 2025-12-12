@@ -69,7 +69,18 @@ def dashboard(request):
             return redirect("dashboard")
     else:
         join_group_form = JoinGroupForm()
-    return render(request, "dashboard.html", {"join_group_form": join_group_form, })
+
+    add_wishlist_item_form = WishlistItemForm(request.POST)
+    if add_wishlist_item_form.is_valid():
+            print("Form is valid")
+            item = add_wishlist_item_form.save(commit=False)
+            # item.wishlist = wishlist
+            item.save()
+            messages.success(request, "Item added to your wishlist!")
+    else:
+        add_wishlist_item_form = WishlistItemForm()
+
+    return render(request, "dashboard.html", {"join_group_form": join_group_form, "add_wishlist_item_form": add_wishlist_item_form})
 
 def new_group_info(request):
     if request.method == 'POST':
@@ -178,22 +189,7 @@ def my_wishlist(request, group_id):
         "items": items,
         "form": form,
     })
-
-@login_required
-def add_wishlist_item(request, wishlist_id):
-    wishlist = get_object_or_404(Wishlist, id=wishlist_id)
-
-    if request.method == "POST":
-        form = WishlistItemForm(request.POST)
-        if form.is_valid():
-            item = form.save(commit=False)
-            item.wishlist = wishlist
-            item.save()
-            messages.success(request, "Item added to your wishlist!")
     
-    return redirect("my_wishlist", group_id=wishlist.group.id)
-
-
 def log_out(request):
     logout(request)
     return redirect('home')

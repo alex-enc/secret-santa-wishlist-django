@@ -13,13 +13,20 @@
                   <!-- Two columns inside the left column -->
                 <div class="col-md-6">
                     <div class="widget">
-                        <!-- Create Group -->
-                        <div class="card">
-                            <div class="card-header">
-                                <h3>Create Your Secret Santa Gift Exchange Group</h3>
-                            </div>
+                        <!-- Group members -->
+                        <div class="card">           
                             <div class="card-body">
-                                <a href="{% url 'create_group' %}" class="btn btn-secondary">Create Group</a>
+                                <h3>Member 1</h3>
+                            </div>
+                        </div>
+                                                <div class="card">           
+                            <div class="card-body">
+                                <h3>Member 2</h3>
+                            </div>
+                        </div>
+                                                <div class="card">           
+                            <div class="card-body">
+                                <h3>Member 3</h3>
                             </div>
                         </div>
                     </div>
@@ -52,39 +59,44 @@
 
         <!-- Right-hand side -->
         <div class="col-md-6 right-column">
-            <h2>My Wishlist</h2>
-            <ul class="list-group">
+            <div class="card">
+            <div class="card-header">
+                <h3>My Wishlist</h3>
+            </div>
+            <div class="card-body">
 
-                <!-- if wishlist has items -->
-                <!-- Display wishlist items -->
-                {% if items %}
-                    <ul>
-                        {% for item in items %}
-                            <li>
-                                <strong>{{ item.item_name }}</strong>
-                                {% if item.item_url %}
-                                    — <a href="{{ item.item_url }}" target="_blank">Link</a>
-                                {% endif %}
-                                <br>
-                                <small>{{ item.description }}</small>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                {% else %}
-                    <p><em>You haven't added anything yet.</em></p>
-                {% endif %}
+                <ul class="list-group">
 
-                <hr>
+                    <!-- if wishlist has items -->
+                    <!-- Display wishlist items -->
+                    {% if items %}
+                        <ul>
+                            {% for item in items %}
+                                <li>
+                                    <strong>{{ item.item_name }}</strong>
+                                    {% if item.item_url %}
+                                        — <a href="{{ item.item_url }}" target="_blank">Link</a>
+                                    {% endif %}
+                                    <br>
+                                    <small>{{ item.description }}</small>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p><em>You haven't added anything yet.</em></p>
+                    {% endif %}
 
-                <!-- Add new item -->
-                <h5>Add Item</h5>
-                <form method="post" action="">
-                    {% csrf_token %}
-                    {% include 'partials/messages.html' with messages=messages %}
-                    {{ add_wishlist_item_form.as_p }}
-                    <button class="btn btn-red">Add</button>
-                </form>
-            </ul>
+                    <hr>
+
+                    <!-- Add new item -->
+                    <form method="post" action="">
+                        {% csrf_token %}
+                        {% include 'partials/messages.html' with messages=messages %}
+                        {{ add_wishlist_item_form.as_p }}
+                        <button class="btn btn-red">Add Item</button>
+                    </form>
+                </ul>
+            </div>
         </div>
     </div>
 </div>
