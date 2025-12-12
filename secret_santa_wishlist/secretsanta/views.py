@@ -1,11 +1,12 @@
 from datetime import datetime
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
-from secretsanta.models import GroupMember, Group, Assignment
+from secretsanta.models import GroupMember, Group, Assignment, Wishlist
 from secretsanta.forms.sign_up_form import SignUpForm
 from secretsanta.forms.log_in_form import LogInForm 
 from secretsanta.forms.create_group_form import CreateGroupForm 
 from secretsanta.forms.join_group_form import JoinGroupForm 
+from secretsanta.forms.add_wishlist_item_form import WishlistItemForm 
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib import messages
@@ -157,7 +158,40 @@ def profile(request):
     
     return render(request, "profile.html", {'user': user})
 
+# views.py
 
+@login_required
+def my_wishlist(request, group_id):
+    group = get_object_or_404(Group, id=group_id)   
+    # Get or create wishlist
+    wishlist, created = Wishlist.objects.get_or_create(
+        user=request.user,
+        group=group
+    )
+
+    items = wishlist.items.all()
+    form = WishlistItemForm()
+
+    return render(request, "wishlist/my_wishlist.html", {
+        "group": group,
+        "wishlist": wishlist,
+        "items": items,
+        "form": form,
+    })
+
+@login_required
+def add_wishlist_item(request, wishlist_id):
+    wishlist = get_object_or_404(Wishlist, id=wishlist_id)
+
+    if request.method == "POST":
+        form = WishlistItemForm(request.POST)
+        if form.is_valid():
+            item = form.save(commit=False)
+            item.wishlist = wishlist
+            item.save()
+            messages.success(request, "Item added to your wishlist!")
+    
+    return redirect("my_wishlist", group_id=wishlist.group.id)
 
 
 def log_out(request):

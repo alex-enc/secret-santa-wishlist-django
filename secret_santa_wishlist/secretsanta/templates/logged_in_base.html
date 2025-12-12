@@ -20,13 +20,22 @@
             <div class="container-fluid d-flex justify-content-between align-items-center">
                 
                 <!-- Left: Logo / Title -->
-                <a href="{% url 'dashboard' %}" class="btn secretsanta-logo">SECRETSANTA</button>
+                <a href="{% url 'dashboard' %}" class="btn secretsanta-logo">SECRETSANTA</a>
                 <!-- <a class=" fw-bold secretsanta-logo" href="#">SECRETSANTA</a> -->
                 
                 <!-- Right: Links -->
                 <div class="d-flex align-items-center gap-3">
-                <a href="#" class="no-underline nav-btn">MY LIST</a>
-                <a href="{% url 'my_groups' %}" class="no-underline nav-btn">MY GROUPS</a>
+                <div class="dropdown">
+                      <a class="no-underline nav-btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            GROUPS
+                      </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{% url 'create_group' %}">CREATE GROUP</a></li>
+                        <li><a class="dropdown-item" href="#">JOIN GROUP</a></li>
+                        <li><a class="dropdown-item" href="{% url 'my_groups' %}">MY GROUPS</a></li>
+                    </ul>
+                </div>
+
                 <a href="{% url 'profile' %}" class="no-underline nav-btn">PROFILE</a>
                 <a href="{% url 'log_out' %}" class="no-underline nav-btn">LOG OUT</a>
                 </div>
@@ -35,8 +44,8 @@
         </nav>
         {% block body %}
         {% endblock %}
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+      
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>   
-  
+        
     </body>
 </html>

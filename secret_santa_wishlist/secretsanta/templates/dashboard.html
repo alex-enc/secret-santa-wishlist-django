@@ -54,10 +54,36 @@
         <div class="col-md-6 right-column">
             <h2>My Wishlist</h2>
             <ul class="list-group">
-                <li class="list-group-item">Wishlist Item 1</li>
-                <li class="list-group-item">Wishlist Item 2</li>
-                <li class="list-group-item">Wishlist Item 3</li>
-                <!-- Add more wishlist items as needed -->
+
+                <!-- if wishlist has items -->
+                <!-- Display wishlist items -->
+                {% if items %}
+                    <ul>
+                        {% for item in items %}
+                            <li>
+                                <strong>{{ item.item_name }}</strong>
+                                {% if item.item_url %}
+                                    — <a href="{{ item.item_url }}" target="_blank">Link</a>
+                                {% endif %}
+                                <br>
+                                <small>{{ item.description }}</small>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p><em>You haven't added anything yet.</em></p>
+                {% endif %}
+
+                <hr>
+
+                <!-- Add new item -->
+                <h5>Add Item</h5>
+                <form method="post" action="">
+                    {% csrf_token %}
+                    {% include 'partials/messages.html' with messages=messages %}
+                    {{ add_wishlist_item_form.as_p }}
+                    <button class="btn btn-red">Add</button>
+                </form>
             </ul>
         </div>
     </div>
