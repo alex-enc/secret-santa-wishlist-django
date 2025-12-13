@@ -50,6 +50,8 @@ def log_in(request):
     return render(request, 'log_in.html', {'form': form})
 
 def dashboard(request):
+    user = request.user
+    member_groups = Group.objects.filter(memberships__user=user).distinct()
     join_group_form = JoinGroupForm(request.POST)
     if join_group_form.is_valid():
         group_code = join_group_form.cleaned_data["group_code"] 
@@ -71,16 +73,23 @@ def dashboard(request):
         join_group_form = JoinGroupForm()
 
     add_wishlist_item_form = WishlistItemForm(request.POST)
+    """IF user does not have a wishlist for this group yet, create a wishlist and add wishlist items to it
+     Get or create wishlist
+  """
+    # wishlist, created = Wishlist.objects.get_or_create(        
+    #     user=request.user,
+    #     group=group
+    # ) 
     if add_wishlist_item_form.is_valid():
             print("Form is valid")
             item = add_wishlist_item_form.save(commit=False)
-            # item.wishlist = wishlist
+            item.wishlist = wishlist
             item.save()
             messages.success(request, "Item added to your wishlist!")
     else:
         add_wishlist_item_form = WishlistItemForm()
 
-    return render(request, "dashboard.html", {"join_group_form": join_group_form, "add_wishlist_item_form": add_wishlist_item_form})
+    return render(request, "dashboard.html", {"join_group_form": join_group_form, "member_groups": member_groups, "add_wishlist_item_form": add_wishlist_item_form})
 
 def new_group_info(request):
     if request.method == 'POST':

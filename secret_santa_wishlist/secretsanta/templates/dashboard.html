@@ -10,6 +10,12 @@
         <!-- Left-hand side -->
         <div class="col-md-6 left-column">
             <div class="row">
+                <select class="form-select" aria-label="Default select example">
+                    <option selected>Select Group</option>
+                    {% for group in member_groups %}
+                        <option value="{{ group.id }}">{{ group.name }}</option>
+                    {% endfor %}    
+                </select>
                   <!-- Two columns inside the left column -->
                 <div class="col-md-6">
                     <div class="widget">
