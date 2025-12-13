@@ -83,23 +83,39 @@
                                 </li>
                             {% endfor %}
                         </ul>
+                        <a class="no-underline">+</a>
+                        <p><em>Add Item...</em></p>
                     {% else %}
-                        <p><em>You haven't added anything yet.</em></p>
+                        <a type="button" class="btn btn-red" data-bs-toggle="modal" data-bs-target="#addItemModal">+ Add Item</a></li>
                     {% endif %}
 
-                    <hr>
-
-                    <!-- Add new item -->
-                    <form method="post" action="">
-                        {% csrf_token %}
-                        {% include 'partials/messages.html' with messages=messages %}
-                        {{ add_wishlist_item_form.as_p }}
-                        <button class="btn btn-red">Add Item</button>
-                    </form>
+                    
                 </ul>
             </div>
         </div>
     </div>
+</div>
+ <!-- Modal -->
+        <div class="modal fade" id="addItemModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered"">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Add Item</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="post" action="{% url 'dashboard' %}">
+                            {% csrf_token %}
+                            {{ add_wishlist_item_form.as_p }}
+                            {% include 'partials/messages.html' with messages=messages %}
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-red">Add</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
 </div>
 
 {% endblock %}
