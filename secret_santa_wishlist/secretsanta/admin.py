@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import User, Group, GroupMember
+from .models import User, Group, GroupMember, Wishlist, Assignment, WishlistItem
 
 # Register your models here.
 @admin.register(User)
@@ -21,3 +21,15 @@ class GroupMemberAdmin(admin.ModelAdmin):
     """Configuration of the admin interface for group members. """
     list_display = ('user', 'group', 'date_joined', 'is_admin')  # Display group name, code, and admin in the admin panel
     search_fields = ('user', 'group', 'date_joined', 'is_admin')  # Add search capabilities
+
+@admin.register(Assignment)
+class AssignmentAdmin(admin.ModelAdmin):
+    """Configuration of the admin interface for secret santa assignments. """
+    list_display = ('giver', 'receiver', 'group', 'year')  
+    search_fields = ('giver', 'receiver', 'group', 'year')  # Add search capabilities
+
+@admin.register(Wishlist)
+class WishlistAdmin(admin.ModelAdmin):
+    """Configuration of the admin interface for Wishlists. """
+    list_display = ('user', 'group', 'created_at')  
+    search_fields = ('user', 'group', 'created_at')  # Add search capabilities
