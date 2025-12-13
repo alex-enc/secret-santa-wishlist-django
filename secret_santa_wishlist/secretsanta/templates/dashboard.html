@@ -11,12 +11,19 @@
         <div class="col-md-6 left-column">
             <div class="row">
                 {% if member_groups.count > 1 %}
-                    <select class="form-select" aria-label="Default select example">
-                        <option selected>Select Group</option>
-                        {% for group in member_groups %}
-                            <option value="{{ group.id }}">{{ group.name }}</option>
-                        {% endfor %}    
-                    </select>
+                    <form method="post">
+                        {% csrf_token %}
+                        <select name="selected_group" onchange="this.form.submit()">
+                            <option value="">-- Select group --</option>
+                            {% for group in member_groups %}
+                                <option value="{{ group.id }}"
+                                    {% if selected_group and group.id == selected_group.id %}selected{% endif %}>
+                                    {{ group.name }}
+                                </option>
+
+                            {% endfor %}
+                        </select>
+                    </form>
                 {% endif %}
                   <!-- Two columns inside the left column -->
                 <div class="col-md-6">
@@ -91,8 +98,7 @@
                                 </li>
                             {% endfor %}
                         </ul>
-                        <a class="no-underline">+</a>
-                        <p><em>Add Item...</em></p>
+                        <a type="button" class="btn btn-red" data-bs-toggle="modal" data-bs-target="#addItemModal">+ Add Item</a></li>
                     {% else %}
                         <a type="button" class="btn btn-red" data-bs-toggle="modal" data-bs-target="#addItemModal">+ Add Item</a></li>
                     {% endif %}
@@ -117,7 +123,7 @@
                             {{ add_wishlist_item_form.as_p }}
                             {% include 'partials/messages.html' with messages=messages %}
                             <div class="modal-footer">
-                                <button type="submit" class="btn btn-red">Add</button>
+                                <button class="btn btn-red" name="add_wishlist_item">Add Item</button>
                             </div>
                         </form>
                     </div>
