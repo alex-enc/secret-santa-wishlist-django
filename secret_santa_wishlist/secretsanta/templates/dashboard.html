@@ -8,7 +8,7 @@
 <div class="container-fluid dashboard">
     <div class="row h-100">
         <!-- Left-hand side -->
-        <div class="col-md-6 left-column">
+        <div class="col-md-6 left-columns">
             <div class="row">
                 {% if member_groups.count > 1 %}
                     <form method="post">
@@ -19,54 +19,36 @@
                                 <option value="{{ group.id }}"
                                     {% if selected_group and group.id == selected_group.id %}selected{% endif %}>
                                     {{ group.name }}
-                                </option>
-
+                                    
+                                </option>                  
                             {% endfor %}
                         </select>
                     </form>
+                    <!-- display group members -->
+                    <div class="container text-center" style="display: flex; flex-direction: column;">
+                        
+                        {% if selected_group %}
+                            <div class="row">
+                                {% for members in selected_group.memberships.all %}
+                                    <div class="col-12 col-md-6 mb-3">
+                                        <div class="card h-100">
+                                            <div class="card-body text-center">
+                                                {{ members.user.first_name }} {{ members.user.last_name }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% empty %}
+                                    <p>No members yet</p>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <p>Select a group</p>
+                        {% endif %}
+
+                    </div>
                 {% endif %}
-                  <!-- Two columns inside the left column -->
-                <div class="col-md-6">
-                    <div class="widget">
-                        <!-- Group members -->
-                        <div class="card">           
-                            <div class="card-body">
-                                <h3>Member 1</h3>
-                            </div>
-                        </div>
-                                                <div class="card">           
-                            <div class="card-body">
-                                <h3>Member 2</h3>
-                            </div>
-                        </div>
-                        <div class="card">           
-                            <div class="card-body">
-                                <h3>Member 3</h3>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="widget">
-                        <!-- Join Group -->
-                        <div class="card">
-                            <div class="card-body">
-                                <h3>Member 4</h3>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-body">
-                                <h3>Member 5</h3>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-body">
-                                <h3>Member 6</h3>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
+            
            
             <div class="widget">Group Members' Wishlists</div>
             <div class="widget">Additional Widget</div>
