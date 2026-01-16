@@ -15,18 +15,18 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from secretsanta import views
+from secretsanta.views import home_view, sign_up_view, log_in_view, log_out_view, dashboard_view, new_group_info_view, create_group_view, my_groups_view, generate_assignments_view, profile_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.home, name='home'),
-    path('sign_up/', views.sign_up, name='sign_up'),
-    path('log_in/', views.log_in, name='log_in'),
-    path('log_out', views.log_out, name='log_out'),
-    path('dashboard/', views.dashboard, name='dashboard'),
-    path('new_group_info/', views.new_group_info, name='new_group_info'),
-    path('create_group/', views.create_group, name='create_group'),
-    path('my_groups/', views.my_groups, name='my_groups'),
-    path("generate_assignments/<int:group_id>/", views.generate_assignments, name="generate_assignments"),
-    path('profile/', views.profile, name='profile'),
+    path('', home_view.home, name='home'),
+    path('sign_up/', sign_up_view.sign_up, name='sign_up'),
+    path('log_in/', log_in_view.log_in, name='log_in'),
+    path('log_out', log_out_view.log_out, name='log_out'),
+    path('dashboard/', dashboard_view.dashboard, name='dashboard'),
+    path('new_group_info/', new_group_info_view.new_group_info, name='new_group_info'),
+    path('create_group/', create_group_view.create_group, name='create_group'),
+    path('my_groups/', my_groups_view.my_groups, name='my_groups'),
+    path("generate_assignments/<int:group_id>/", generate_assignments_view.generate_assignments, name="generate_assignments"),
+    path('profile/', profile_view.profile, name='profile'),
 ]
