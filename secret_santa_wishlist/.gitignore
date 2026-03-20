@@ -275,4 +275,10 @@ pyrightconfig.json
 pyvenv.cfg
 pip-selfcheck.json
 
+.DS_Store
+db.sqlite3
+venv/
+__pycache__/
+*.pyc
+
 # End of https://www.toptal.com/developers/gitignore/api/python,django,virtualenv
