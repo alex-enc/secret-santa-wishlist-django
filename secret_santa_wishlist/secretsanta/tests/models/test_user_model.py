@@ -1,6 +1,7 @@
 from django.core.exceptions import ValidationError
 from django.test import TestCase
-from secretsanta.models import User
+from secretsanta.models.user_model import User
+
 # Create your tests here.
 
 class UserModelTestCase(TestCase):
