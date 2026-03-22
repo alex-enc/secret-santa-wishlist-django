@@ -1,12 +1,24 @@
 [
     {
-      "model": "microblogs.user",
+      "model": "secretsanta.user",
       "pk": 2,
       "fields": {
         "first_name": "Jane",
         "last_name": "Doe",
         "username": "janedoe",
         "email": "janedoe@example.org",
+        "password": "pbkdf2_sha256$260000$TgNTFUf4pOfWn2vnPjB7bJ$9P0CKsdZHVK6/xdHeWXorffi4ff7OLDUJ8psvk50HTM=",
+        "is_active": true
+      }
+    },
+    {
+      "model": "secretsanta.user",
+      "pk": 3,
+      "fields": {
+        "first_name": "Alice",
+        "last_name": "Smith",
+        "username": "alicesmith",
+        "email": "alicesmith@example.org",
         "password": "pbkdf2_sha256$260000$TgNTFUf4pOfWn2vnPjB7bJ$9P0CKsdZHVK6/xdHeWXorffi4ff7OLDUJ8psvk50HTM=",
         "is_active": true
       }
