@@ -5,7 +5,7 @@
       "fields": {
         "name": "Default Group",
         "code": "DEFAULT123",
-        "group_type": "family_friends",
+        "group_type": "family",
         "admin": 1
       }
     }
