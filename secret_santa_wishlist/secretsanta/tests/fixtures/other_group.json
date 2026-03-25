@@ -1,0 +1,14 @@
+[
+    {
+      "model": "secretsanta.group",
+      "pk": 2,
+      "fields": {
+        "name": "Other Group",
+        "code": "OTHER123",
+        "group_type": "work",
+        "admin": 1
+      }
+    }
+  ]
+
+   
