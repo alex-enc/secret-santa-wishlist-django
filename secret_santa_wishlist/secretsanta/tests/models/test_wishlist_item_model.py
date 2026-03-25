@@ -129,16 +129,3 @@ class WishlistItemModelTestCase(TestCase):
     def _assert_wishlist_item_is_invalid(self, wishlist_item):
             with self.assertRaises(ValidationError):
                 wishlist_item.full_clean()
-
-
-
-
-
-
-    # wishlist = models.ForeignKey(Wishlist, on_delete=models.CASCADE, related_name="items")
-    # item_name = models.CharField(max_length=255)
-    # item_url = models.URLField(blank=True, null=True)
-    # description = models.TextField(blank=True, null=True)
-    # taken = models.BooleanField(default=False)  # Whether the item has been taken by a giver
-    # created_at = models.DateTimeField(auto_now_add=True)
-   
