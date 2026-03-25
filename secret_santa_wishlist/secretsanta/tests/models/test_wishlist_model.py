@@ -4,7 +4,6 @@ from django.core.exceptions import ValidationError
 from django.test import TestCase
 from secretsanta.models.user_model import User
 from secretsanta.models.group_model import Group
-from secretsanta.models.group_member_model import GroupMember
 from secretsanta.models.wishlist_model import Wishlist
 
 class WishlistModelTestCase(TestCase):
