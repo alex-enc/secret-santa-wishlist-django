@@ -1,0 +1,14 @@
+[
+    {
+      "model": "secretsanta.group",
+      "pk": 1,
+      "fields": {
+        "name": "Default Group",
+        "code": "DEFAULT123",
+        "group_type": "family_friends",
+        "admin": 1
+      }
+    }
+  ]
+
+   
