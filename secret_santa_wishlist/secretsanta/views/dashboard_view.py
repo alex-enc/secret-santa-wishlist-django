@@ -59,7 +59,7 @@ def dashboard(request):
 
 
 
-    # JOIN GROUP FORM
+    # # JOIN GROUP FORM
     join_group_form = JoinGroupForm(request.POST or None)
 
     if request.method == "POST" and "join_group" in request.POST:
