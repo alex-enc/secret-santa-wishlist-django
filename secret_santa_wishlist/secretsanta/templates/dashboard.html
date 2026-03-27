@@ -94,7 +94,7 @@
         </div>
     </div>
 </div>
- <!-- Modal -->
+ <!-- Wishlist Modal -->
         <div class="modal fade" id="addItemModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered"">
                 <div class="modal-content">
@@ -106,7 +106,6 @@
                         <form method="post" action="{% url 'dashboard' %}">
                             {% csrf_token %}
                             {{ add_wishlist_item_form.as_p }}
-                            {% include 'partials/messages.html' with messages=messages %}
                             <div class="modal-footer">
                                 <button class="btn btn-red" name="add_wishlist_item">Add Item</button>
                             </div>
