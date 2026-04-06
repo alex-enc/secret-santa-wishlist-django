@@ -7,111 +7,121 @@
 
 <div class="container-fluid dashboard">
     <div class="row h-100">
-        <!-- Left-hand side -->
-        <div class="col-md-6 left-columns">
-            <div class="row">
-                {% if member_groups.count > 1 %}
-                    <form method="post">
-                        {% csrf_token %}
-                        <select name="selected_group" onchange="this.form.submit()">
-                            <option value="">-- Select group --</option>
-                            {% for group in member_groups %}
-                                <option value="{{ group.id }}"
-                                    {% if selected_group and group.id == selected_group.id %}selected{% endif %}>
-                                    {{ group.name }}
-                                    
-                                </option>                  
-                            {% endfor %}
-                        </select>
-                    </form>
-                    <!-- display group members -->
-                    <div class="container text-center" style="display: flex; flex-direction: column;">
-                        
-                        {% if selected_group %}
-                            <div class="row">
-                                {% for members in selected_group.memberships.all %}
-                                    {% if members.user != user %}  
-                                        <div class="col-12 col-md-6 mb-3">
-                                       
-                                            <div class="card h-100">
-                                                <div class="card-body text-center">
-                                                    {{ members.user.first_name }} {{ members.user.last_name }}
+        {% if member_groups.count == 0 %}
+        <div class="d-flex justify-content-center align-items-center" style="height: 80vh;">
+            <div class="col-12 text-center">
+                <h2>Welcome, {{ user.first_name }}!</h2>
+                <p>You are not part of any groups yet. Start by creating or joining a group!</p>
+                <a href="{% url 'create_group' %}" class="btn btn-red">Create Group</a>
+                <a type="button" class="btn btn-red" data-bs-toggle="modal" data-bs-target="#joinGroupModal">Join Group</a>
+            </div>
+        </div>
+        {% else %}
+            <!-- Left-hand side -->
+            <div class="col-md-6 left-columns">
+                <div class="row">
+                    {% if member_groups.count > 1 %}
+                        <form method="post">
+                            {% csrf_token %}
+                            <select name="selected_group" onchange="this.form.submit()">
+                                <option value="">-- Select group --</option>
+                                {% for group in member_groups %}
+                                    <option value="{{ group.id }}"
+                                        {% if selected_group and group.id == selected_group.id %}selected{% endif %}>
+                                        {{ group.name }}
+                                        
+                                    </option>                  
+                                {% endfor %}
+                            </select>
+                        </form>
+                        <!-- display group members -->
+                        <div class="container text-center" style="display: flex; flex-direction: column;">
+                            
+                            {% if selected_group %}
+                                <div class="row">
+                                    {% for members in selected_group.memberships.all %}
+                                        {% if members.user != user %}  
+                                            <div class="col-12 col-md-6 mb-3">
+                                        
+                                                <div class="card h-100">
+                                                    <div class="card-body text-center">
+                                                        {{ members.user.first_name }} {{ members.user.last_name }}
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    {% endif %}
-                                {% empty %}
-                                    <p>No members yet</p>
+                                        {% endif %}
+                                    {% empty %}
+                                        <p>No members yet</p>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                <p>Select a group</p>
+                            {% endif %}
+
+                        </div>
+                    {% endif %}
+                </div>
+                
+                <!-- Add more widgets as needed -->
+            </div>
+
+            <!-- Right-hand side -->
+            <div class="col-md-6 right-column">
+                <div class="card">
+                <div class="card-header">
+                    <h3>My Wishlist</h3>
+                </div>
+                <div class="card-body">
+
+                    <ul class="list-group">
+
+                        <!-- if wishlist has items -->
+                        <!-- Display wishlist items -->
+                        {% if items %}
+                            <ul>
+                                {% for item in items %}
+                                    <li>
+                                        <strong>{{ item.item_name }}</strong>
+                                        {% if item.item_url %}
+                                            — <a href="{{ item.item_url }}" target="_blank">Link</a>
+                                        {% endif %}
+                                        <br>
+                                        <small>{{ item.description }}</small>
+                                    </li>
                                 {% endfor %}
-                            </div>
+                            </ul>
+                            <a type="button" class="btn btn-red" data-bs-toggle="modal" data-bs-target="#addItemModal">+ Add Item</a></li>
                         {% else %}
-                            <p>Select a group</p>
+                            <a type="button" class="btn btn-red" data-bs-toggle="modal" data-bs-target="#addItemModal">+ Add Item</a></li>
                         {% endif %}
 
-                    </div>
-                {% endif %}
-            </div>
-            
-            <!-- Add more widgets as needed -->
-        </div>
-
-        <!-- Right-hand side -->
-        <div class="col-md-6 right-column">
-            <div class="card">
-            <div class="card-header">
-                <h3>My Wishlist</h3>
-            </div>
-            <div class="card-body">
-
-                <ul class="list-group">
-
-                    <!-- if wishlist has items -->
-                    <!-- Display wishlist items -->
-                    {% if items %}
-                        <ul>
-                            {% for item in items %}
-                                <li>
-                                    <strong>{{ item.item_name }}</strong>
-                                    {% if item.item_url %}
-                                        — <a href="{{ item.item_url }}" target="_blank">Link</a>
-                                    {% endif %}
-                                    <br>
-                                    <small>{{ item.description }}</small>
-                                </li>
-                            {% endfor %}
-                        </ul>
-                        <a type="button" class="btn btn-red" data-bs-toggle="modal" data-bs-target="#addItemModal">+ Add Item</a></li>
-                    {% else %}
-                        <a type="button" class="btn btn-red" data-bs-toggle="modal" data-bs-target="#addItemModal">+ Add Item</a></li>
-                    {% endif %}
-
-                    
-                </ul>
-            </div>
-        </div>
-    </div>
-</div>
- <!-- Wishlist Modal -->
-        <div class="modal fade" id="addItemModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered"">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Add Item</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form method="post" action="{% url 'dashboard' %}">
-                            {% csrf_token %}
-                            {{ add_wishlist_item_form.as_p }}
-                            <div class="modal-footer">
-                                <button class="btn btn-red" name="add_wishlist_item">Add Item</button>
-                            </div>
-                        </form>
-                    </div>
+                        
+                    </ul>
                 </div>
             </div>
         </div>
-</div>
-
+    </div>
+    <!-- Wishlist Modal -->
+            <div class="modal fade" id="addItemModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered"">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="staticBackdropLabel">Add Item</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form method="post" action="{% url 'dashboard' %}">
+                                {% csrf_token %}
+                                {{ add_wishlist_item_form.as_p }}
+                                <div class="modal-footer">
+                                    <button class="btn btn-red" name="add_wishlist_item">Add Item</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+{% endif %}
 {% endblock %}
 
