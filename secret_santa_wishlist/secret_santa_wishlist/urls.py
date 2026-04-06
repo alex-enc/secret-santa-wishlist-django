@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from secretsanta.views import home_view, sign_up_view, log_in_view, log_out_view, dashboard_view, new_group_info_view, create_group_view, my_groups_view, generate_assignments_view, profile_view
+from secretsanta.views import home_view, sign_up_view, log_in_view, log_out_view, dashboard_view, new_group_info_view, my_groups_view, generate_assignments_view, profile_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
