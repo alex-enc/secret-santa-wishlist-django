@@ -22,7 +22,7 @@
                     </form>
                 {% endif %}
                 <!-- Button trigger modal -->
-                <button type="button" class="btn btn-red" data-bs-toggle="modal" data-bs-target="#whoDidIDrawModal">
+                <button type="button" class="btn btn-red" data-bs-toggle="modal" data-bs-target="#whoDidIDrawModal{{ group.id }}">
                     Who did I draw?
                 </button>
             </div>
@@ -54,12 +54,12 @@
         </div>
     </div>
         <!-- Modal -->
-    <div class="modal fade" id="whoDidIDrawModal" tabindex="-1" aria-labelledby="whoDidIDrawModalLabel" aria-hidden="true">
+    <div class="modal fade" id="whoDidIDrawModal{{ group.id }}" tabindex="-1" aria-labelledby="whoDidIDrawModalLabel{{ group.id }}" aria-hidden="true">
         <!-- Vertically centered modal -->
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="whoDidIDrawModalLabel">Who Did I Draw?</h1>
+                    <h1 class="modal-title fs-5" id="whoDidIDrawModalLabel{{ group.id }}">Who Did I Draw?</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">

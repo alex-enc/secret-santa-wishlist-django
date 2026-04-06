@@ -3,14 +3,9 @@ from datetime import datetime
 from .models import Assignment
 
 def generate_secret_santa_assignments(group):
-    """
-    Randomly assign each member in a group another member to gift to.
-    Avoids giving someone they had in the last 3 years (if possible).
-    Saves assignments to the database.
-    """
-
     members = [m.user for m in group.memberships.all()]
-
+    print("GROUP:", group.name)
+    print("MEMBERS:", [u.username for u in members])
     current_year = datetime.now().year
 
     if len(members) < 2:
@@ -47,7 +42,7 @@ def generate_secret_santa_assignments(group):
                     group=group,
                     year=current_year
                 )
-            return True  # Done!
+            return True  # Assignments generated successfully
 
         attempts += 1
 
