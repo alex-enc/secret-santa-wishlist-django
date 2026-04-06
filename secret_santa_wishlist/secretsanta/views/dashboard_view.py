@@ -25,10 +25,11 @@ def dashboard(request):
             memberships__user=user
         ).first()
 
-    # Auto-select if only one group
-    if not selected_group and member_groups.count() == 1:
+    # Auto-select first group if none selected
+    if not selected_group and member_groups.exists() or member_groups.count() == 1:
         selected_group = member_groups.first()
         request.session["selected_group_id"] = selected_group.id
+        print(f"🔄 Auto-selected group: {selected_group.name} (ID: {selected_group.id})")
 
     # HANDLE GROUP SELECTION (DROPDOWN)
     if request.method == "POST" and "selected_group" in request.POST:
@@ -100,7 +101,7 @@ def dashboard(request):
 
             messages.success(request, "Wishlist item added!")
             return redirect("dashboard")
-
+        
     return render(
         request,
         "dashboard.html",

@@ -59,6 +59,26 @@
                             {% endif %}
 
                         </div>
+                        {% else %}
+  
+                                {% if selected_group %}
+                                    <div class="row">
+                                        {% for members in selected_group.memberships.all %}
+                                            {% if members.user != user %}  
+                                                <div class="col-12 col-md-6 mb-3">
+                                            
+                                                    <div class="card h-100">
+                                                        <div class="card-body text-center">
+                                                            {{ members.user.first_name }} {{ members.user.last_name }}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            {% endif %}
+                                        {% empty %}
+                                            <p>No members yet</p>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
                     {% endif %}
                 </div>
                 
