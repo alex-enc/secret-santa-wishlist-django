@@ -1,6 +1,7 @@
 from secretsanta.models import GroupMember, Group, Wishlist
 from django.shortcuts import get_object_or_404, redirect, render
 from secretsanta.forms.join_group_form import JoinGroupForm 
+from secretsanta.forms.create_group_form import CreateGroupForm
 from secretsanta.forms.add_wishlist_item_form import WishlistItemForm 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -58,6 +59,22 @@ def dashboard(request):
         if wishlist:
             items = wishlist.items.all()
 
+    # CREATE GROUP FORM
+    if request.method == 'POST':
+        create_group_form = CreateGroupForm(request.POST)
+        print(create_group_form.is_bound)
+        
+        if create_group_form.is_valid():
+            print("Form is valid")
+            create_group_form.save(admin=request.user)
+            messages.success(request, 'Group created successfully!')
+            return redirect('my_groups')  # Redirect to the dashboard or any other page
+        else:
+            messages.error(request, 'There was an error creating the group.')
+    else:
+        create_group_form = CreateGroupForm()
+
+
 
 
     # # JOIN GROUP FORM
@@ -111,6 +128,7 @@ def dashboard(request):
             "wishlist": wishlist,
             "items": items,
             "join_group_form": join_group_form,
+            "create_group_form": create_group_form,
             "add_wishlist_item_form": add_wishlist_item_form,
         }
     )

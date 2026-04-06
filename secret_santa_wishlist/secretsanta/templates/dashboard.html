@@ -12,7 +12,7 @@
             <div class="col-12 text-center">
                 <h2>Welcome, {{ user.first_name }}!</h2>
                 <p>You are not part of any groups yet. Start by creating or joining a group!</p>
-                <a href="{% url 'create_group' %}" class="btn btn-red">Create Group</a>
+                <a type="button" class="btn btn-red" data-bs-toggle="modal" data-bs-target="#createGroupModal">Create Group</a>
                 <a type="button" class="btn btn-red" data-bs-toggle="modal" data-bs-target="#joinGroupModal">Join Group</a>
             </div>
         </div>

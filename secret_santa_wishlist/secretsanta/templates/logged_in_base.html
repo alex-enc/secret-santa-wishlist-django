@@ -30,7 +30,7 @@
                             GROUPS
                       </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="{% url 'create_group' %}">CREATE GROUP</a></li>
+                        <li><a class="dropdown-item" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createGroupModal">CREATE GROUP</a></li>
                         <li><a class="dropdown-item" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#joinGroupModal">JOIN GROUP</a></li>
                         <li><a class="dropdown-item" href="{% url 'my_groups' %}">MY GROUPS</a></li>
                     </ul>
@@ -47,6 +47,7 @@
                 {% include 'partials/messages.html' with messages=messages %}
             </div>
         {% endif %}
+
         <!-- Join Group Modal -->
         <div class="modal fade" id="joinGroupModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered"">
@@ -67,6 +68,28 @@
                 </div>
             </div>
         </div>
+
+         <!-- Create Group Modal -->
+        <div class="modal fade" id="createGroupModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered"">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Create Group</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="post" action="{% url 'dashboard' %}">
+                            {% csrf_token %}
+                            {{ create_group_form.as_p }}
+                            <div class="modal-footer">
+                                <button type="submit" name="create_group" class="btn btn-red">Create</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         {% block body %}
         
         {% endblock %}

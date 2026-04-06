@@ -66,6 +66,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'secretsanta.context_processors.join_group_form',
+                'secretsanta.context_processors.create_group_form',
             ],
         },
     },
