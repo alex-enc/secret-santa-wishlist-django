@@ -4,13 +4,14 @@ from pyexpat.errors import messages
 
 from django.test import TestCase
 from django.urls import reverse
-from secretsanta.models import User, Group, GroupMember
+from secretsanta.models import User, Group, GroupMember, Wishlist, WishlistItem
 from secretsanta.tests.helpers import LogInTester, reverse_with_next   
 
 class DashboardViewTestCase(TestCase, LogInTester):
     """Tests of the dashboard view."""
 
     fixtures = ['secretsanta/tests/fixtures/default_user.json',
+                'secretsanta/tests/fixtures/other_user.json',
                 'secretsanta/tests/fixtures/default_group.json',
                 'secretsanta/tests/fixtures/other_group.json']
 
@@ -19,6 +20,16 @@ class DashboardViewTestCase(TestCase, LogInTester):
         self.user = User.objects.get(username='johndoe')
         self.group = Group.objects.get(code='DEFAULT123')
         self.group2 = Group.objects.get(code='OTHER123')
+
+        self.wishlist = Wishlist.objects.create(
+            user=self.user,
+            group=self.group
+        )
+
+        self.item = WishlistItem.objects.create(
+            wishlist=self.wishlist,
+            item_name="Test Item"
+        )
 
     # test dashboard url
     def test_dashboard_url(self):
@@ -68,3 +79,67 @@ class DashboardViewTestCase(TestCase, LogInTester):
         response = self.client.get(self.url)
         groups = response.context['member_groups']
         self.assertEqual(len(groups), 0)
+
+    # test dashboard shows correct wishlist items for selected group
+    def test_dashboard_shows_correct_wishlist_items_for_selected_group(self):
+        self.client.login(username=self.user.username, password='Password123')
+        user1 = User.objects.get(username='johndoe')
+        GroupMember.objects.create(user=user1, group=self.group, is_admin=True)
+        response = self.client.get(self.url)
+
+        items = response.context['items']
+        self.assertIn(self.item, items)
+
+    # test dashboard does not show incorrect wishlist items for other group
+    def test_dashboard_shows_only_correct_wishlist_items(self):
+        self.client.login(username=self.user.username, password='Password123')
+
+        # Users
+        user1 = User.objects.get(username='johndoe')
+        user2 = User.objects.get(username='janedoe')
+
+        # Groups
+        group1 = Group.objects.get(code='DEFAULT123')
+        group2 = Group.objects.get(code='OTHER123')
+
+        # Memberships
+        GroupMember.objects.create(user=user1, group=group1)
+        GroupMember.objects.create(user=user1, group=group2)
+        GroupMember.objects.create(user=user2, group=group1)
+
+        # Wishlists
+
+        wishlist2 = Wishlist.objects.create(user=user1, group=group2)
+        wishlist3 = Wishlist.objects.create(user=user2, group=group1)
+
+        # Items
+        item1 = WishlistItem.objects.create(
+            wishlist=self.wishlist,
+            item_name="Correct Item"
+        )
+
+        item2 = WishlistItem.objects.create(
+            wishlist=wishlist2,
+            item_name="Wrong Group Item"
+        )
+
+        item3 = WishlistItem.objects.create(
+            wishlist=wishlist3,
+            item_name="Other User Item"
+        )
+
+        # Force selected group = group1
+        session = self.client.session
+        session["selected_group_id"] = group1.id
+        session.save()
+
+        response = self.client.get(reverse('dashboard'))
+
+        self.assertEqual(response.status_code, 200)
+
+        items = response.context['items']
+
+        self.assertIn(item1, items)
+
+        self.assertNotIn(item2, items)
+        self.assertNotIn(item3, items)
