@@ -6,7 +6,8 @@
 {% block body %}
 
 <div class="container-fluid dashboard">
-    <div class="row h-100">
+    <div class="container">
+           <div class="row h-100">
         {% if member_groups.count == 0 %}
         <div class="d-flex justify-content-center align-items-center" style="height: 80vh;">
             <div class="col-12 text-center">
@@ -141,7 +142,11 @@
                     </div>
                 </div>
             </div>
+        </div>
+    {% endif %}
+
     </div>
-{% endif %}
+ </div>
+ 
 {% endblock %}
 
