@@ -60,7 +60,7 @@ def dashboard(request):
             items = wishlist.items.all()
 
     # CREATE GROUP FORM
-    if request.method == 'POST':
+    if request.method == 'POST' and 'create_group' in request.POST:
         create_group_form = CreateGroupForm(request.POST)
         print(create_group_form.is_bound)
         
