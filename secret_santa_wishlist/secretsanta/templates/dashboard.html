@@ -104,16 +104,23 @@
                                     <li>
                                         <strong>{{ item.item_name }}</strong>
                                         {% if item.item_url %}
-                                            — <a href="{{ item.item_url }}" target="_blank">Link</a>
+                                            — <a class="link-green" href="{{ item.item_url }}" target="_blank">Link</a>
                                         {% endif %}
                                         <br>
                                         <small>{{ item.description }}</small>
                                     </li>
                                 {% endfor %}
                             </ul>
-                            <a type="button" class="btn btn-red" data-bs-toggle="modal" data-bs-target="#addItemModal">+ Add Item</a></li>
+                            <div class="mt-3 mx-auto ">
+                                <a type="button" class="btn btn-green-outline">Edit</a></li>
+                                <a type="button" class="btn btn-green-outline" data-bs-toggle="modal" data-bs-target="#addItemModal">+ Add Item</a></li>
+                                <a type="button" class="btn btn-green">Publish</a></li>
+                            </div>
+                           
                         {% else %}
-                            <a type="button" class="btn btn-red" data-bs-toggle="modal" data-bs-target="#addItemModal">+ Add Item</a></li>
+                           
+                            <a type="button" class="btn btn-green" data-bs-toggle="modal" data-bs-target="#addItemModal">+ Add Item</a></li>
+                            
                         {% endif %}
 
                         

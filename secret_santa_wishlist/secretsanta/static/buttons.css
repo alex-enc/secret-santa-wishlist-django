@@ -17,6 +17,36 @@ a.link-red:hover {
     text-decoration: none;
 }
 
+.btn-green {
+    background-color: #1F662E;
+    color: #DDECC6;
+    border-radius: 25px;
+    font-size: 20px;
+    font-weight: 600;
+    padding: 10px 20px 10px 20px;
+}
+
+.btn-green-outline {
+    background-color: transparent;
+    color: #1F662E;
+    border: 2px solid #1F662E;
+    border-radius: 25px;
+    font-size: 20px;
+    font-weight: 600;
+    padding: 10px 20px 10px 20px;
+}
+
+a.link-green {
+    color: #1F662E !important;
+    text-decoration: underline;
+}
+
+a.link-green:hover {
+    color: #1F662E;
+    text-decoration: none;
+}
+
+
 .nav-btn {
     color: #BA1104;
     font-size: 15px;
