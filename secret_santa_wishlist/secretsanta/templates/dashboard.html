@@ -125,17 +125,20 @@
                                                     <!-- VIEW MODE -->
                                                     <p><strong>URL:</strong> <a href="{{ item.item_url }}" target="_blank">{{ item.item_url }}</a></p>
                                                     <p><strong>Description:</strong> {{ item.description }}</p>
-                                                    <div class="mx-auto">
+                                                    <div class="d-flex justify-content-center gap-2 mt-3">
                                                         <button type="button"
                                                             class="btn btn-green-outline"
                                                             data-bs-toggle="modal"
                                                             data-bs-target="#editItemModal{{ item.id }}">
                                                             Edit
                                                         </button>
-                                                        <button class="btn btn-red"
-                                                                name="delete_wishlist_item">
-                                                            Delete
-                                                        </button>
+                                                        <form method="post">
+                                                            {% csrf_token %}
+                                                            <input type="hidden" name="item_id" value="{{ item.id }}">
+                                                            <button type="submit" name="delete_wishlist_item" class="btn btn-red">
+                                                                Delete
+                                                            </button>
+                                                        </form>
                                                     </div>
                                                 </div>  
                                             </div>  
@@ -154,36 +157,46 @@
                                                 </div>
                                                 <div class="modal-body">
                                                     <!-- EDIT FORM -->
-                                                    <form method="post" action="{% url 'dashboard' %}">
+                                               
+                                                        <form method="post" action="{% url 'dashboard' %}">
                                                         {% csrf_token %}
                                                         <input type="hidden" name="item_id" value="{{ item.id }}">
                                                         <label for="item_name_{{ item.id }}" class="form-label">
                                                             <strong>Item Name</strong>
                                                         </label>
-                                                        <input class="form-control mb-2"
-                                                            type="text"
-                                                            name="item_name"
-                                                            value="{{ item.item_name }}">
-                                                        <label for="item_url_{{ item.id }}" class="form-label">
-                                                            <strong>URL</strong>
-                                                        </label>
-                                                        <input class="form-control mb-2"
-                                                            type="text"
-                                                            name="item_url"
-                                                            value="{{ item.item_url }}">
-                                                        <label for="description_{{ item.id }}" class="form-label">
-                                                            <strong>Description</strong>
-                                                        </label>
-                                                        <textarea class="form-control mb-2" name="description">{{ item.description }}</textarea>
-                                                        <button class="btn btn-green-outline"
-                                                                name="edit_wishlist_item">
-                                                            Save Changes
-                                                        </button>
-                                                        <button class="btn btn-red"
-                                                                name="delete_wishlist_item">
-                                                            Delete
-                                                        </button>
-                                                    </form>
+                                                            <input class="form-control mb-2"
+                                                                type="text"
+                                                                name="item_name"
+                                                                value="{{ item.item_name }}">
+                                                            <label for="item_url_{{ item.id }}" class="form-label">
+                                                                <strong>URL</strong>
+                                                            </label>
+                                                            <input class="form-control mb-2"
+                                                                type="text"
+                                                                name="item_url"
+                                                                value="{{ item.item_url }}">
+                                                            <label for="description_{{ item.id }}" class="form-label">
+                                                                <strong>Description</strong>
+                                                            </label>
+                                                            <textarea class="form-control mb-2" name="description">{{ item.description }}</textarea>
+                                                            <div class="d-flex justify-content-center gap-2 mt-3"></div>
+                                                            <button class="btn btn-green-outline"
+                                                                    name="edit_wishlist_item">
+                                                                Save
+                                                            </button>
+                                                            <button type="submit" name="delete_wishlist_item" class="btn btn-red">
+                                                                Delete
+                                                            </button>
+                                                        </form>
+                                                        <!-- <form method="post">
+                                                            {% csrf_token %}
+                                                            <input type="hidden" name="item_id" value="{{ item.id }}">
+                                                            <button type="submit" name="delete_wishlist_item" class="btn btn-red">
+                                                                Delete
+                                                            </button>
+                                                        </form> -->
+                                                    
+                                                   
                                                 </div>  
                                             </div>
                                         </div>
