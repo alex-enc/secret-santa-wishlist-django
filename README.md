@@ -51,25 +51,32 @@ Instead of messy group chats and random spreadsheets, everything is managed in o
 ```bash
 git clone https://github.com/alex-enc/secret-santa-wishlist-django.git
 cd secret-santa-wishlist-django
-
+```
 ### 2. Create a virtual environment
+```bash
 python -m venv venv
-
+```
 ### 3. Activate the virtual environment
 #### Windows
+```bash
 venv\Scripts\activate
-
+```
 #### Mac/Linux
+```bash
 source venv/bin/activate
-
+```
 ### 4. Install dependencies
+```bash
 pip install -r requirements.txt
-
+```
 ### 5. Run migrations
+```bash
 python manage.py migrate
-
+```
 ### 6. Start the development server
+```bash
 python manage.py runserver
+```
 
 ## 📄 License
 This project is for portfolio purposes.
