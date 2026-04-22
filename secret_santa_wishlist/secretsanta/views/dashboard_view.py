@@ -156,10 +156,37 @@ def dashboard(request):
             )
 
             item.delete()
-
             messages.success(request, "Item deleted!")
             return redirect("dashboard")
+        # ---------------------------------
+        # PUBLISH WISHLIST
+        # ---------------------------------
+        elif "publish_wishlist" in request.POST:
+            wishlist, created = Wishlist.objects.get_or_create(
+                user=user,
+                group=selected_group
+            )
+            
+            wishlist.published = True
+            wishlist.save()
+            print("Wishlist published:", wishlist.published)
+            messages.success(request, "Wishlist published!")
+            return redirect("dashboard")
+        # ---------------------------------
+        # UNPUBLISH WISHLIST
+        # ---------------------------------
+        elif "unpublish_wishlist" in request.POST:
+            wishlist = Wishlist.objects.filter(
+                user=user,
+                group=selected_group
+            ).first()
 
+            if wishlist:
+                wishlist.published = False
+                wishlist.save()
+                messages.success(request, "Wishlist unpublished!")
+            return redirect("dashboard")
+        
     # ---------------------------------
     # LOAD WISHLIST + ITEMS
     # ---------------------------------

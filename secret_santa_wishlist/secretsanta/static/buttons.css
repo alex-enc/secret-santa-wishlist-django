@@ -7,6 +7,16 @@
     padding: 10px 20px 10px 20px;
 }
 
+.btn-red-outline {
+    background-color: transparent;
+    color: #BA1104;
+    border: 2px solid #BA1104;
+    border-radius: 25px;
+    font-size: 20px;
+    font-weight: 600;
+    padding: 10px 20px 10px 20px;
+}
+
 a.link-red {
     color: #BA1104 !important;
     text-decoration: underline;
