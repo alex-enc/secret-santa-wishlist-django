@@ -1,0 +1,83 @@
+<div class="row">
+    {% if member_groups.count > 1 %}
+        <form method="post">
+            {% csrf_token %}
+            <select name="selected_group" onchange="this.form.submit()">
+                <option value="">-- Select group --</option>
+                {% for group in member_groups %}
+                    <option value="{{ group.id }}"
+                        {% if selected_group and group.id == selected_group.id %}selected{% endif %}>
+                        {{ group.name }}
+                    </option>
+                {% endfor %}
+            </select>
+        </form>
+    {% endif %}
+
+<div class="container text-center" style="display: flex; flex-direction: column;">
+
+    {% if selected_group %}
+        <div class="row">
+            {% for members in selected_group.memberships.all %}
+                {% if members.user != user %}
+                    <div class="col-12 col-md-6 mb-3">
+                        <div
+                            class="card wishlist-card h-100 w-100"
+                            role="button"
+                            data-bs-toggle="modal"
+                            data-bs-target="#wishlistModal{{ members.user.id }}"
+                            style="cursor:pointer;"
+                        >
+                            <div class="card-body text-center">
+                                {{ members.user.first_name }} {{ members.user.last_name }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="wishlistModal{{ members.user.id }}" tabindex="-1">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5>{{ members.user.first_name }}'s Wishlist</h5>
+                                    <button type="button"
+                                            class="btn-close"
+                                            data-bs-dismiss="modal"></button>
+                                </div>
+
+                                <div class="modal-body">
+                                    {% with other_wishlist=members.user.wishlists.first %}
+                                        {% if other_wishlist and other_wishlist.published %}
+                                            {% for item in other_wishlist.items.all %}
+                                                <div class="mb-3 border-bottom pb-2">
+                                                    <strong>{{ item.item_name }}</strong><br>
+                                                    {% if item.item_url %}
+                                                        <a href="{{ item.item_url }}" target="_blank">
+                                                            View Item
+                                                        </a><br>
+                                                    {% endif %}
+                                                    {% if item.description %}
+                                                        <small>{{ item.description }}</small>
+                                                    {% endif %}
+                                                </div>
+                                            {% empty %}
+                                                <p>No items yet.</p>
+                                            {% endfor %}
+                                        {% else %}
+                                            <p>This wishlist is private.</p>
+                                        {% endif %}
+                                    {% endwith %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+                {% empty %}
+                    <p>No members yet</p>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>Select a group</p>
+        {% endif %}
+    </div>
+</div>
