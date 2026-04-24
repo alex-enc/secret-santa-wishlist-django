@@ -200,6 +200,21 @@ def dashboard(request):
             items = wishlist.items.all()
 
     # ---------------------------------
+    # OTHER USER'S WISHLIST
+    # ---------------------------------
+    selected_group_members = selected_group.memberships.exclude(user=user).select_related("user") if selected_group else []
+
+    wishlists = Wishlist.objects.filter(
+        group=selected_group,
+        user__in=[m.user for m in selected_group_members]
+    ).prefetch_related("items")
+
+    wishlist_map = {w.user_id: w for w in wishlists}
+
+    for member in selected_group_members:
+        member.group_wishlist = wishlist_map.get(member.user_id)
+
+    # ---------------------------------
     # RENDER PAGE
     # ---------------------------------
     return render(
@@ -213,5 +228,6 @@ def dashboard(request):
             "create_group_form": create_group_form,
             "join_group_form": join_group_form,
             "add_wishlist_item_form": add_wishlist_item_form,
+            "selected_group_members": selected_group_members if selected_group else [],
         }
     )

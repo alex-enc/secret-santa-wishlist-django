@@ -10,7 +10,7 @@
     border-right: 1px solid #ddd;
 }
 .right-column {
-    position: sticky; /* Fix the position */
+    /* position: sticky; Fix the position */
     top: 0; /* Stick to the top of the viewport */
     height: 100%; /* Ensure it spans the full viewport height */
     padding: 20px;
